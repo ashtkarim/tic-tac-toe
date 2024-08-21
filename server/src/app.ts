@@ -5,11 +5,15 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import users from "./routes/users";
 
+const port = 3000;
+const host = '127.0.0.1';
+
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
 app.use(session({
+  name: '_session',
   secret: '123456',
   resave: false,
   saveUninitialized: false,
@@ -29,7 +33,7 @@ app.use(cors({
 app.use(users);
 
 mongoose.connection.once('open', () => {
-  app.listen(3000, "127.0.0.1", () => { 
-    console.log("Server is runing ");
+  app.listen(3000, host, () => { 
+    console.log(`Server is runing <${host}:${port}>`);
   });
 })
