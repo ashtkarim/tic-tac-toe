@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 interface AuthContextType {
-    user: Object | null;
+    user: IUser | null;
     logout?: () => void;
 }
 
@@ -10,4 +10,10 @@ interface PrivateRouteProps {
     accessible?: boolean;
 }
 
-export type { AuthContextType, PrivateRouteProps };
+interface IUser extends Document {
+    username: string;
+    email: string;
+    password: string;
+}
+
+export type { AuthContextType, PrivateRouteProps, IUser };

@@ -13,8 +13,14 @@ const users = Router();
 
 users.get('/@me', (req, res) => {
   console.log(req.session);
-  if (req.session.session_id)
-    res.status(200).send(JSON.stringify({"id": req.session.session_id}));
+  if (req.session.session_id) {
+    const user = {
+      username: 'radouane',
+      email: 'red@gmail.com'
+    }
+    res.status(200).send(JSON.stringify({"user": user}));
+    // res.status(200).send(JSON.stringify({"id": req.session.session_id}));
+  }
   else
     res.status(403).send(JSON.stringify({"error": "FORBIDEN"}))
 });
