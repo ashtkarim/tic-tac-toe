@@ -1,5 +1,9 @@
-/* This example requires Tailwind CSS v2.0+ */
 import { useState } from 'react';
+import { FaUserFriends } from "react-icons/fa";
+import { FaRobot } from "react-icons/fa6";
+import { TfiCup } from "react-icons/tfi";
+import { MdLeaderboard } from "react-icons/md";
+import { FaInfoCircle } from "react-icons/fa";
 
 const icon = (
 	<svg
@@ -13,10 +17,10 @@ const icon = (
 );
 
 const navigation = [
-	{ name: "Play vs friend", href: '#', icon: icon, current: true },
-	{ name: 'Play vs robot', href: '#', icon: icon, current: false },
-	{ name: 'LeaderBoard', href: '/leaderboard', icon: icon, current: false },
-	{ name: 'About', href: '#', icon: icon, current: false },
+	{ name: "Play vs friend", href: '#', icon: <FaUserFriends />, current: true },
+	{ name: 'Play vs robot', href: '#', icon: <FaRobot />, current: false },
+	{ name: 'LeaderBoard', href: '#', icon: <MdLeaderboard />, current: false },
+	{ name: 'About', href: '#', icon: <FaInfoCircle />, current: false },
 ];
 
 function classNames(...classes) {
@@ -29,33 +33,37 @@ export default function AsideNav({ children }) {
 
 	return (
 		<div>
-			<div className={`hidden md:fixed md:inset-y-0 md:flex md:w-${expand ? '64' : '14'} w-${expand ? '64' : '14'}`}>
+			<div className={`hidden md:fixed md:inset-y-0 md:flex md:${expand ? 'w-64' : 'w-16'} ${expand ? 'w-64' : 'w-16'}`}>
 				<div className="flex min-h-0 flex-1 flex-col bg-primary">
 					<div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
 						<div className={`flex flex-shrink-0 items-center px-${expand ? '4' : '2'}`}>
 							<img
-								className={`w-full ${expand ? 'p-5 w-1/3' : 'p-0'}`}
+								className={`w-full ${expand ? 'p-5' : 'p-0'}`}
 								src="/brand_logo.svg"
 								alt="logo contains X vs O"
 							/>
 						</div>
-						<nav className={`flex-1 space-y-1 px-2 mt-${expand ? '0' : '20'}`}>
+						<nav className={`flex-1 space-y-1 px-2 ${expand ? 'mt-0' : 'mt-16'}`}>
 							{navigation.map((item) => (
-								<a
-									key={item.name}
-									href={item.href}
-									className={classNames(
-										item.current ? 'bg-secondaryLight text-white' : 'text-white hover:bg-primaryLighter hover:bg-opacity-75',
-										'group flex gap-2 px-2 py-2 text-xl font-bold relative'
-									)}
-								>
-									{item.icon}
-									{expand ? item.name : ''}
-								</a>
+								<>
+
+									<a
+										key={item.name}
+										href={item.href}
+										className={classNames(
+											item.current ? 'bg-secondaryLight text-white' : 'text-white hover:bg-primaryLighter hover:bg-opacity-75',
+											'group flex gap-2 px-2 py-2 text-xl font-bold items-center', expand ? '' : 'justify-center'
+										)}
+									>
+										{<div class='text-2xl'>{item.icon}</div>}
+										{expand ? item.name : ''}
+									</a>
+								</>
+
 							))}
 						</nav>
-					</div>
-					<div className={`flex border-t-2 flex-shrink-0 border-secondary p-${expand ? '3' : '1'}`}>
+					</div >
+					<div className={`flex border-t-2 flex-shrink-0 border-secondary ${expand ? 'p-3' : 'p-1'}`}>
 						<a href="#" className="group block w-full flex-shrink-0 hover:bg-primaryLight p-1">
 							<div className="flex items-center">
 								<div>
@@ -82,7 +90,7 @@ export default function AsideNav({ children }) {
 					{expand ? '<<' : '>>'}
 				</button>
 			</div>
-			<div className={`flex flex-1 flex-col w-100 md:pl-${expand ? '64' : '15'} pl-${expand ? '64' : '10'}`}>
+			<div className={`flex flex-1 flex-col w-100 md:${expand ? 'pl-64' : 'pl-16'} ${expand ? 'pl-64' : 'pl-16'}`}>
 				<div className="sticky top-0 z-10 bg-gray-100 pl-1 pt-1 sm:pl-3 sm:pt-3 md:hidden">
 					<button
 						type="button"
@@ -96,7 +104,7 @@ export default function AsideNav({ children }) {
 				<main className="flex-1 min-h-screen bg-primaryLight">
 					<div className="py-6">
 						<div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 mb-5">
-							<h1 className="text-4xl font-semibold text-white">Dashboard</h1>
+							<h1 className="text-4xl font-semibold text-white">Leaderboard</h1>
 						</div>
 						<div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
 							<div className="py-4">
