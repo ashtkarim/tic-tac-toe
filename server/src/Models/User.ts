@@ -1,8 +1,7 @@
-// import mongoose, { Document, Schema } from "mongoose";
 import mongoose from "../engine/db";
 
 export interface IUser extends Document {
-  userName: string;
+  username: string;
   email: string;
   password: string;
 }
