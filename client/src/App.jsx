@@ -4,6 +4,7 @@ import RegisterPage from './scenes/RegisterPage'
 import { Routes, Route } from 'react-router-dom'
 import Arena from './scenes/Arena'
 import PrivateRoute from './components/PrivatRoute'
+import LeaderboardPage from "./scenes/LeaderboardPage.jsx";
 
 
 const  App = () => {
@@ -18,12 +19,12 @@ const  App = () => {
 
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-
-          <Route path="/arena" element={
-            <PrivateRoute accessible={false}>
-              <Arena />
-            </PrivateRoute>
-            } />
+        <Route path="/arena" element={
+          <PrivateRoute accessible={false}>
+            <Arena />
+          </PrivateRoute>
+        } />
+        <Route path="/leaderboard" element={<LeaderboardPage />} />
       </Routes>
     </>
   )

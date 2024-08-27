@@ -1,7 +1,11 @@
+import React from 'react';
+import Board from "../components/board.jsx";
 
 function Arena() {
   return (
-    <div>Arena</div>
+    <div>
+      <Board/>
+    </div>
   )
 }
 

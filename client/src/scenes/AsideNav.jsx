@@ -15,7 +15,7 @@ const icon = (
 const navigation = [
 	{ name: "Play vs friend", href: '#', icon: icon, current: true },
 	{ name: 'Play vs robot', href: '#', icon: icon, current: false },
-	{ name: 'LeaderBoard', href: '#', icon: icon, current: false },
+	{ name: 'LeaderBoard', href: '/leaderboard', icon: icon, current: false },
 	{ name: 'About', href: '#', icon: icon, current: false },
 ];
 
@@ -34,7 +34,7 @@ export default function AsideNav({ children }) {
 					<div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
 						<div className={`flex flex-shrink-0 items-center px-${expand ? '4' : '2'}`}>
 							<img
-								className={`w-full ${expand ? 'p-5' : 'p-0'}`}
+								className={`w-full ${expand ? 'p-5 w-1/3' : 'p-0'}`}
 								src="/brand_logo.svg"
 								alt="logo contains X vs O"
 							/>

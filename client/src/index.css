@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.board__container {
+    height: 100vh;
+}
+
+.board {
+    margin: auto;
+    margin-top: 6rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.board__square {
+    height: 10rem;
+    width: 10rem;
+    border: 6px solid var(--primary-color);
+    padding: 1.4rem;
+}
+
+.board__square img {
+    clip-path: circle(0% at 50% 50%);
+    animation: circleReveal 0.4s ease-in-out forwards;
+    transition-duration: .5s;
+    transition-property: transform;
+}
