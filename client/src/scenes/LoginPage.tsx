@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 // import './LoginPage.css';
 
 function LoginPage() {
@@ -23,7 +23,8 @@ function LoginPage() {
       })
     }).then((res) => {
       if (res.ok) {
-        console.log('logged')
+        console.log('logged');
+        window.location.href = '/arena';
       } else {
         console.log('Wrong')
         setErrorMsg('UNAUTHORIZED')

@@ -29,6 +29,12 @@ function RegisterPage() {
         body: JSON.stringify({
             username, email, password
         })
+      }).then((res) => {
+        if (res.status === 201) {
+          window.location.href = '/login';
+        }
+      }).catch(() => {
+        setErrorMsg('Wrong credentials !!!')
       })
     };
   

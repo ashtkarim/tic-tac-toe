@@ -32,6 +32,7 @@ users.post('/login', async (req, res) => {
   if (user && user.password === password) {
     // console.log("logged");
     req.session.session_id = '45er';
+    // res.cookie('sess', '1549798');
     res.status(200).send(JSON.stringify({"msg": "logged in"}))
   } else {
     res.status(401).send(JSON.stringify({'error': 'UNAUTHORIZED'}))
