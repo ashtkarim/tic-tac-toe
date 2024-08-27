@@ -6,7 +6,7 @@ import Arena from './scenes/Arena'
 import PrivateRoute from './components/PrivatRoute'
 
 
-function App() {
+const  App = () => {
   return (
     <>
       <Routes>
@@ -29,4 +29,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
