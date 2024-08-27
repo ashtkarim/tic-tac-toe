@@ -1,7 +1,8 @@
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import 'dotenv/config'
 
-const secretKey = process.env.JWT_SECRET;
+const secretKey = process.env['JWT_SECRET'];
 
 async function hashPassword(password: string | Buffer): Promise<string> {
     // This function hashes a password and returns it
@@ -22,16 +23,16 @@ function generateToken(payload: object): string {
     return jwt.sign(payload, secretKey, { expiresIn: '1h' });
 }
 
-function verifyToken(token: string): object | string {
+function verifyToken(token: string): JwtPayload {
     // This function varifies the JWT token
     if (!secretKey)
         throw new Error('JWT SECRET is doesn\'t exist');
     try {
-        return jwt.verify(token, secretKey);
+        return jwt.verify(token, secretKey) as JwtPayload;
     } catch (error) {
         throw new Error('Invalid token');
     }
 }
 
 
-export {hashPassword, checkPassword};
+export {hashPassword, checkPassword, generateToken, verifyToken};
