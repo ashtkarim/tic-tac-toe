@@ -10,9 +10,10 @@ import { useState } from 'react';
 import Profile from './scenes/profile';
 import Leaderboard from "./components/leaderboard.jsx";
 import LeaderboardPage from "./scenes/LeaderboardPage.jsx";
+import Robot from './scenes/Robot.jsx';
 
 const App = () => {
-  const [title, setTitle] = useState('Title');
+  const [title, setTitle] = useState('Welcome to the Tic-Tac-Toe Game');
 
   return (
     <AsideNav title={title}>
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/play" element={<HomePage setTitle={setTitle} />} />
         {/*<Route path="/about" element={<About setTitle={setTitle} />} />*/}
         <Route path="/profile" element={<Profile setTitle={setTitle} />} />
+        <Route path="/robot" element={<Robot setTitle={setTitle} />} />
 
         <Route path="/arena" element={
           <PrivateRoute accessible={false}>
