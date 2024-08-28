@@ -3,3 +3,4 @@ server/node_modules
 client/node_modules
 server/dest
 /build
+.env
