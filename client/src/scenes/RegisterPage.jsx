@@ -2,13 +2,13 @@ import React, { FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function RegisterPage() {
-    const [username, setUsername] = useState<string>('');
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
-    const [confirmPassword, setConfirmPassword] = useState<string>('');
-    const [errorMsg, setErrorMsg] = useState<string>('');
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
   
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = (e) => {
       e.preventDefault();
       // Handle registration logic here
       if (password !== confirmPassword) {
