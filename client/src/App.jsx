@@ -8,6 +8,8 @@ import AsideNav from './scenes/AsideNav';
 // import About from './scenes/about';
 import { useState } from 'react';
 import Profile from './scenes/profile';
+import Leaderboard from "./components/leaderboard.jsx";
+import LeaderboardPage from "./scenes/LeaderboardPage.jsx";
 
 const App = () => {
   const [title, setTitle] = useState('Title');
@@ -23,9 +25,9 @@ const App = () => {
 
         <Route path="/login" element={<LoginPage setTitle={setTitle} />} />
         <Route path="/register" element={<RegisterPage setTitle={setTitle} />} />
-        <Route path="/leaderboard" element={<HomePage setTitle={setTitle} />} />
+        <Route path="/leaderboard" element={<LeaderboardPage setTitle={setTitle} />} />
         <Route path="/play" element={<HomePage setTitle={setTitle} />} />
-        {/* <Route path="/about" element={<About setTitle={setTitle} />} /> */}
+        {/*<Route path="/about" element={<About setTitle={setTitle} />} />*/}
         <Route path="/profile" element={<Profile setTitle={setTitle} />} />
 
         <Route path="/arena" element={

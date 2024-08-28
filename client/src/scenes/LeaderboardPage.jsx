@@ -5,9 +5,7 @@ import AsideNav from "./AsideNav.jsx";
 const LeaderboardPage = () => {
     return (
         <div>
-            <AsideNav>
-                <Leaderboard/>
-            </AsideNav>
+            <Leaderboard/>
         </div>
     )
 }
