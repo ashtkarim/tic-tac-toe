@@ -1,25 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useContext, createContext } from 'react';
-import axios from '../components/request';
-import { AuthContextType, IUser, PrivateRouteProps } from './interfaces';
+import request from './request';
 
-const AuthContext = createContext<AuthContextType | null>(null);
-export const useAuth = () => useContext(AuthContext);
+const AuthContext = createContext();
+export const useAuth = () => {
+    const context = useContext(AuthContext);
+    if (!context) {
+        throw new Error("useAuth must be used within an AuthProvider");
+    }
+    return context;
+};
 
-const PrivateRoute: React.FC<PrivateRouteProps>  = ({ children, accessible=true }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>();
-    const [doneLoading, setDoneLoading] = useState<boolean>(false);
-    const [user, setUser] = useState<IUser|null>(null);
+
+const PrivateRoute = ({ children, accessible=true }) => {
+    const [isAuthenticated, setIsAuthenticated] = useState();
+    const [doneLoading, setDoneLoading] = useState(false);
+    const [user, setUser] = useState(null);
 
     const logout = () => {
         setUser(null);
+        setIsAuthenticated(false);
     }
 
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const res = await axios.get("http://127.0.0.1:3000/@me")
+                const res = await request.get("http://127.0.0.1:5000/@me")
                 if (res.status === 200) {
                     console.log(res);
                     setUser(res.data.user)
