@@ -26,12 +26,19 @@ export default function AsideNav({ children, title }) {
 		setNavPage(updatedPages);
 	}
 
+	function NoPageSelected() {
+		const updatedPages = navPage.map(page => {
+			page.current = false;
+			return page;
+		});
+		setNavPage(updatedPages);
+	}
 	return (
 		<div>
 			<div className={`hidden md:fixed md:inset-y-0 md:flex ${expand ? 'md:w-64' : 'md:w-16'} `}>
 				<div className="flex min-h-0 flex-1 flex-col bg-primary">
 					<div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
-						<div className={`flex flex-shrink-0 items-center px-${expand ? '4' : '2'}`}>
+						<div className={`flex flex-shrink-0 items-center ${expand ? 'px-4' : 'px-2'}`}>
 							<img
 								className={`w-full ${expand ? 'p-5' : 'p-0'}`}
 								src="/brand_logo.svg"
@@ -60,7 +67,7 @@ export default function AsideNav({ children, title }) {
 						</nav>
 					</div>
 					<div className={`flex border-t-2 flex-shrink-0 border-secondary ${expand ? 'p-3' : 'p-1'}`}>
-						<Link to="/profile" className="group block w-full flex-shrink-0 hover:bg-primaryLight p-1">
+						<Link to="/profile" onClick={NoPageSelected} className="group block w-full flex-shrink-0 hover:bg-primaryLight p-1">
 							<div className="flex items-center">
 								<div>
 									<img
@@ -86,11 +93,11 @@ export default function AsideNav({ children, title }) {
 					{expand ? <FaCircleArrowLeft /> : <FaCircleArrowRight />}
 				</button>
 			</div>
-			<div className={`flex flex-1 flex-col w-100 `}>
-				<div className="sticky flex top-0 z-10 bg-primary py-2 px-5 md:hidden justify-between items-center">
+			<div className={`flex flex-1 flex-col w-100`}>
+				<div className="sticky flex top-0 z-50 bg-primary py-2 px-5 md:hidden justify-between items-center">
 
 					<div className={`flex flex-shrink-0`}>
-						<a href="#" className="group block flex-shrink-0 hover:bg-primaryLight p-1">
+						<Link href="/profile" onClick={NoPageSelected} className="group block flex-shrink-0 hover:bg-primaryLight p-1">
 							<div className="flex items-center ">
 								<div>
 									<img
@@ -106,7 +113,7 @@ export default function AsideNav({ children, title }) {
 								</div>
 
 							</div>
-						</a>
+						</Link>
 					</div>
 
 					<button
@@ -119,7 +126,7 @@ export default function AsideNav({ children, title }) {
 					</button>
 				</div>
 				{/* mobile nav */}
-				{sidebarOpen ? <div className='sticky top-14 sm:hidden bg-primary px-5 pb-5 border-t-2'>
+				{sidebarOpen ? <div className='sticky top-14 sm:hidden bg-primary px-5 pb-5 border-t-2 z-30'>
 					<nav className='flex-1 space-y-1 px-2 mt-5'>
 						{navPage.map((item) => (
 							<>
@@ -139,10 +146,10 @@ export default function AsideNav({ children, title }) {
 						))}
 					</nav>
 				</div> : null}
-				<main className={`flex-1 min-h-screen bg-primaryLight md:${expand ? 'pl-64' : 'pl-16'}`}>
-					<div className="py-6">
+				<main className={`flex-1 min-h-screen bg-primaryLight ${expand ? 'md:pl-64' : 'md:pl-16'}`}>
+					<div className="px-10 pt-16">
 						<div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 mb-5">
-							<h1 className="text-4xl font-semibold text-white">{title}</h1>
+							<h1 className="text-4xl font-semibold text-white text-center sm:text-start">{title}</h1>
 						</div>
 						<div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
 							<div className="py-4">
