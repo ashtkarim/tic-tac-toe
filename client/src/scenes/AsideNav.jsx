@@ -17,10 +17,30 @@ const icon = (
 );
 
 const navigation = [
-	{ name: "Play vs friend", href: '#', icon: <FaUserFriends />, current: true },
-	{ name: 'Play vs robot', href: '#', icon: <FaRobot />, current: false },
-	{ name: 'LeaderBoard', href: '#', icon: <MdLeaderboard />, current: false },
-	{ name: 'About', href: '#', icon: <FaInfoCircle />, current: false },
+	{
+		name: "Play vs friend",
+		href: '#',
+		icon: <FaUserFriends title="Play vs friend" />,
+		current: true
+	},
+	{
+		name: 'Play vs robot',
+		href: '#',
+		icon: <FaRobot title="Play vs robot" />,
+		current: false
+	},
+	{
+		name: 'LeaderBoard',
+		href: '/leaderboard',
+		icon: <MdLeaderboard title="LeaderBoard" />,
+		current: false
+	},
+	{
+		name: 'About',
+		href: '#',
+		icon: <FaInfoCircle title="About" />,
+		current: false
+	},
 ];
 
 function classNames(...classes) {
