@@ -31,3 +31,12 @@
     transition-duration: .5s;
     transition-property: transform;
 }
+
+.square {
+    width: 100px; /* Adjust based on desired size */
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #000; /* Example border style */
+}
