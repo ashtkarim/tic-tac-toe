@@ -102,14 +102,14 @@ const Board = () => {
                 key={index}
                 className={`flex items-center justify-center border ${
                     isWinningSquare ? 'bg-yellow-200' : ''
-                } w-full h-full`}
+                } w-full h-full cursor-pointer`}
                 onClick={() => handleClick(index)}
             >
                 {symbol && (
                     <img
                         src={symbolImage}
                         alt={`${symbol} symbol`}
-                        className=" w-[150px] h-[50px]"
+                        className="w-12 h-12" // Increased size for larger symbols
                     />
                 )}
             </div>
@@ -133,7 +133,7 @@ const Board = () => {
     );
 
     return (
-        <div className="min-h-auto w-auto bg-primary flex items-center justify-center p-4">
+        <div className="min-h-screen w-full bg-primary flex items-center justify-center p-4">
             <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-8 w-full max-w-6xl">
                 {/* Board with Player Info */}
                 <div className="relative bg-primaryLight bg-opacity-40 backdrop-blur-lg p-8 rounded-lg shadow-lg flex-1 flex flex-col items-center justify-center">
@@ -147,7 +147,7 @@ const Board = () => {
                             <span className="text-white font-bold">{timeLeftO}s</span>
                         </div>
                     </div>
-                    <div className="relative grid grid-cols-3 gap-0 w-[300px] max-w-md h-[300px] border border-primaryLight bg-primaryLighter bg-opacity-20 backdrop-blur-md">
+                    <div className="relative grid grid-cols-3 grid-rows-3 gap-2 w-[400px] h-[400px] border border-primaryLight bg-primaryLighter bg-opacity-20 backdrop-blur-md">
                         {Array(9).fill(null).map((_, index) => renderSquare(index))}
                     </div>
                     {winner && (
