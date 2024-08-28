@@ -11,7 +11,7 @@ function LoginPage() {
     e.preventDefault();
     setErrorMsg('');
     // console.log(email, password)
-    fetch('http://127.0.0.1:3000/login', {
+    fetch('http://127.0.0.1:3000/signin', {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',
@@ -23,10 +23,10 @@ function LoginPage() {
       })
     }).then((res) => {
       if (res.ok) {
-        console.log('logged');
+        // console.log('logged');
         window.location.href = '/arena';
       } else {
-        console.log('Wrong')
+        // console.log('Wrong')
         setErrorMsg('UNAUTHORIZED')
       }
     }).catch(() => {
