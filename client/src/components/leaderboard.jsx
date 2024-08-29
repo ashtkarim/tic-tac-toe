@@ -35,46 +35,46 @@ const Leaderboard = () => {
                 {/*</h2>*/}
                 <table className="w-full bg-gray-800 text-white rounded-lg overflow-hidden">
                     <thead>
-                    <tr className="text-gray-400 border-b border-gray-700">
-                        <th className="py-4 px-6 text-left">#</th>
-                        <th className="py-4 px-6 text-left">Player</th>
-                        <th className="py-4 px-6 text-center">W/L/D</th>
-                        <th className="py-4 px-6 text-center">
-                            <span role="img" aria-label="time">⏳</span>
-                        </th>
-                        <th className="py-4 px-6 text-right">Score</th>
-                    </tr>
+                        <tr className="text-gray-400 border-b border-gray-700">
+                            <th className="py-4 px-6 text-left">#</th>
+                            <th className="py-4 px-6 text-left">Player</th>
+                            <th className="py-4 px-6 text-center  hidden md:table-cell">W/L/D</th>
+                            <th className="py-4 px-6 text-center hidden md:table-cell">
+                                <span role="img" aria-label="time">⏳</span>
+                            </th>
+                            <th className="py-4 px-6 text-right">Score</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {players.map((player, index) => (
-                        <tr
-                            key={player.id}
-                            className="border-b border-gray-700 hover:bg-gray-700 transition-all duration-200 bg-gray-900"
-                        >
-                            <td className="py-4 px-6 text-lg font-medium">
-                                {index + 1}
-                            </td>
-                            <td className="py-4 px-6 text-lg flex items-center">
-                                <img
-                                    src={player.avatar}
-                                    alt={`${player.name} avatar`}
-                                    className="w-8 h-8 rounded-full mr-3"
-                                />
-                                <span>{player.name}</span>
-                            </td>
-                            <td className="py-4 px-6 text-lg text-center">
-                                <span className="text-green-400">{player.wins}</span> /
-                                <span className="text-red-400"> {player.losses}</span> /
-                                <span className="text-gray-400"> {player.draws}</span>
-                            </td>
-                            <td className="py-4 px-6 text-lg text-center">
-                                {player.timePlayed}
-                            </td>
-                            <td className="py-4 px-6 text-lg text-right font-bold">
-                                {player.score}
-                            </td>
-                        </tr>
-                    ))}
+                        {players.map((player, index) => (
+                            <tr
+                                key={player.id}
+                                className="border-b border-gray-700 hover:bg-gray-700 transition-all duration-200 bg-gray-900"
+                            >
+                                <td className="py-4 px-6 text-lg font-medium">
+                                    {index + 1}
+                                </td>
+                                <td className="py-4 px-6 text-lg flex items-center">
+                                    <img
+                                        src={player.avatar}
+                                        alt={`${player.name} avatar`}
+                                        className="w-8 h-8 rounded-full mr-3"
+                                    />
+                                    <span>{player.name}</span>
+                                </td>
+                                <td className="py-4 px-6 text-lg text-center hidden md:table-cell">
+                                    <span className="text-green-400">{player.wins}</span> /
+                                    <span className="text-red-400"> {player.losses}</span> /
+                                    <span className="text-gray-400"> {player.draws}</span>
+                                </td>
+                                <td className="py-4 px-6 text-lg text-center hidden md:table-cell">
+                                    {player.timePlayed}
+                                </td>
+                                <td className="py-4 px-6 text-lg text-right font-bold">
+                                    {player.score}
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>

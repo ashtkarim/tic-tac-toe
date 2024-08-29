@@ -12,7 +12,7 @@ function classNames(...classes) {
 export default function AsideNav({ children, title }) {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 	const [navPage, setNavPage] = useState(navigation);
-	const [expand, setExpand] = useState(true);
+	const [expand, setExpand] = useState(false);
 
 	function updateCurrentPage(id) {
 		const updatedPages = [...navPage].map(page => {
@@ -39,30 +39,28 @@ export default function AsideNav({ children, title }) {
 				<div className="flex min-h-0 flex-1 flex-col bg-primary">
 					<div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
 						<div className={`flex flex-shrink-0 items-center ${expand ? 'px-4' : 'px-2'}`}>
-							<img
-								className={`w-full ${expand ? 'p-5' : 'p-0'}`}
-								src="/brand_logo.svg"
-								alt="logo contains X vs O"
-							/>
+							<Link to='/'>
+								<img
+									className={`w-full ${expand ? 'p-5' : 'p-0'}`}
+									src="/brand_logo.svg"
+									alt="logo contains X vs O"
+								/>
+							</Link>
 						</div>
 						<nav className={`flex-1 space-y-1 px-2 ${expand ? 'mt-0' : 'mt-16'}`}>
 							{navPage.map((item) => (
-								<>
-
-									<Link
-										to={item.href}
-										className={classNames(
-											item.current ? 'bg-secondaryLight text-white' : 'text-white hover:bg-primaryLighter hover:bg-opacity-75',
-											'group flex gap-2 px-2 py-2 text-xl font-bold items-center', expand ? '' : 'justify-center'
-										)}
-										onClick={() => updateCurrentPage(item.id)}
-										kay={item.id}
-									>
-										{<div className='text-2xl'>{item.icon}</div>}
-										{expand ? item.name : ''}
-									</Link>
-								</>
-
+								<Link
+									to={item.href}
+									className={classNames(
+										item.current ? 'bg-secondaryLight text-white' : 'text-white hover:bg-primaryLighter hover:bg-opacity-75',
+										'group flex gap-2 px-2 py-2 text-xl font-bold items-center', expand ? '' : 'justify-center'
+									)}
+									onClick={() => updateCurrentPage(item.id)}
+									key={item.id}
+								>
+									{<div className='text-2xl'>{item.icon}</div>}
+									{expand ? item.name : ''}
+								</Link>
 							))}
 						</nav>
 					</div>
@@ -87,7 +85,7 @@ export default function AsideNav({ children, title }) {
 					</div>
 				</div>
 				<button
-					className="absolute bg-primary rounded-full text-white hover:bg-primaryLighter text-bold top-1/2 right-[-20px] rounded p-3"
+					className="absolute bg-primary rounded-full text-white hover:bg-primaryLighter text-bold top-1/2 right-[-20px] p-3"
 					onClick={() => setExpand(!expand)}
 				>
 					{expand ? <FaCircleArrowLeft /> : <FaCircleArrowRight />}
@@ -129,25 +127,23 @@ export default function AsideNav({ children, title }) {
 				{sidebarOpen ? <div className='sticky top-14 sm:hidden bg-primary px-5 pb-5 border-t-2 z-30'>
 					<nav className='flex-1 space-y-1 px-2 mt-5'>
 						{navPage.map((item) => (
-							<>
-								<Link
-									to={item.href}
-									className={classNames(
-										item.current ? 'bg-secondaryLight text-white' : 'text-white hover:bg-primaryLighter hover:bg-opacity-75',
-										'group flex gap-2 px-2 py-2 text-xl items-center'
-									)}
-									onClick={() => updateCurrentPage(item.id)}
-									kay={item.id}
-								>
-									{item.icon}
-									{item.name}
-								</Link>
-							</>
+							<Link
+								to={item.href}
+								className={classNames(
+									item.current ? 'bg-secondaryLight text-white' : 'text-white hover:bg-primaryLighter hover:bg-opacity-75',
+									'group flex gap-2 px-2 py-2 text-xl items-center'
+								)}
+								onClick={() => updateCurrentPage(item.id)}
+								key={item.id}
+							>
+								{item.icon}
+								{item.name}
+							</Link>
 						))}
 					</nav>
 				</div> : null}
 				<main className={`flex-1 min-h-screen bg-primaryLight ${expand ? 'md:pl-64' : 'md:pl-16'}`}>
-					<div className="px-10 pt-16">
+					<div className="px-1 md:px-10 pt-16">
 						<div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 mb-5">
 							<h1 className="text-4xl font-semibold text-white text-center sm:text-start">{title}</h1>
 						</div>

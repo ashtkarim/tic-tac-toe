@@ -2,6 +2,7 @@ import { AiFillPlusSquare, AiFillMinusSquare } from "react-icons/ai";
 import { PiEqualsFill } from "react-icons/pi";
 import { FaAt } from "react-icons/fa";
 import UserCard from "../components/userCard";
+import { Link } from "react-router-dom";
 const gamesHistory = [
     {
         OpponentUsername: 'doomsday',
@@ -70,8 +71,9 @@ export default function Profile({ setTitle }) {
                                                         <img className="h-10 w-10 rounded-full border border-primary" src={game.OpponentAvatar} alt="" />
                                                     </div>
                                                     <div className="ml-4">
-                                                        <div className="font-medium text-white flex items-center"><span className="text-secondary"><FaAt /></span>{game.OpponentUsername}</div>
-
+                                                        <Link to={`/${game.OpponentUsername}`} className="font-medium text-white flex items-center hover:text-secondary">
+                                                            <span className="text-secondary"><FaAt /></span>{game.OpponentUsername}
+                                                        </Link>
                                                     </div>
                                                 </div>
                                             </td>

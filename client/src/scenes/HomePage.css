@@ -1,0 +1,58 @@
+/* From Uiverse.io by Sharkotech */
+.floatCard {
+    background: rgba(211, 211, 211, 0.199);
+    position: absolute;
+    transition: .3s ease-in-out;
+    cursor: pointer;
+    box-shadow: 0px 0px 30px -10px rgba(0, 0, 0, 0.3);
+    left: 200px;
+    right: 50%;
+}
+
+#c1 {
+    transform: rotate(30deg);
+}
+
+#c2 {
+    transform: rotate(20deg);
+}
+
+#c3 {
+    transform: rotate(10deg);
+}
+
+#c4 {
+    /* background-color: green; */
+}
+
+.cardsBrand__container:hover #c1 {
+    transform: translateX(-100px) rotate(-40deg);
+}
+
+.cardsBrand__container:hover #c2 {
+    transform: translateX(-50px) rotate(-30deg);
+}
+
+.cardsBrand__container:hover #c3 {
+    transform: translateX(0) rotate(-20deg);
+}
+
+.cardsBrand__container:hover #c4 {
+    transform: translateX(50px) rotate(-10deg);
+}
+
+#c1:hover {
+    transform: translateX(-170px) rotate(0deg) !important;
+}
+
+#c2:hover {
+    transform: translate(-120px, -50px) rotate(0deg) !important;
+}
+
+#c3:hover {
+    transform: translate(-70px, -50px) rotate(0deg) !important;
+}
+
+#c4:hover {
+    transform: translate(50px, -50px) rotate(0deg) !important;
+}

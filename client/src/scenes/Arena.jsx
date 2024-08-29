@@ -1,10 +1,12 @@
 import React from 'react';
 import Board from "../components/board.jsx";
 
-function Arena() {
+function Arena({ setTitle }) {
+  setTitle('Who you will beat today :)');
+
   return (
     <div>
-      <Board/>
+      <Board />
     </div>
   )
 }
