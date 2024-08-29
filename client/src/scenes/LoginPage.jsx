@@ -28,9 +28,10 @@ function LoginPage({ setTitle }) {
       })
     }).then((res) => {
       if (res.ok) {
-        console.log('logged')
+        // console.log('logged');
+        window.location.href = '/arena';
       } else {
-        console.log('Wrong')
+        // console.log('Wrong')
         setErrorMsg('UNAUTHORIZED')
       }
     }).catch(() => {

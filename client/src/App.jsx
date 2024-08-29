@@ -1,54 +1,41 @@
 import HomePage from './scenes/HomePage';
 import LoginPage from './scenes/LoginPage';
 import RegisterPage from './scenes/RegisterPage';
+import { Routes, Route } from 'react-router-dom';
 import Arena from './scenes/Arena';
-import PrivateRoute from './components/PrivatRoute.jsx';  // Make sure the file name is correct: "PrivateRoute"
+import PrivateRoute from './components/PrivatRoute';
 import AsideNav from './scenes/AsideNav';
-import About from './scenes/About';
-import Profile from './scenes/Profile';
-import LeaderboardPage from './scenes/LeaderboardPage';
+import About from './scenes/about';
 import { useState } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import Profile from './scenes/profile';
+import LeaderboardPage from "./scenes/LeaderboardPage.jsx";
+import Robot from './scenes/Robot.jsx';
+import RandomGame from './scenes/RandomGame.jsx';
 
 const App = () => {
-  const [title, setTitle] = useState('Title');
-  const location = useLocation();  // To get the current location
-  const noAsideNavRoutes = [];
+  const [title, setTitle] = useState('Welcome to the Tic-Tac-Toe Game');
 
-  const isNoAsideNavRoute = noAsideNavRoutes.includes(location.pathname);
-
+  const noAsideNavRoutes = ['/login', '/register'];
   return (
-      <>
-        {!isNoAsideNavRoute && <AsideNav title={title}>  {/* Only render AsideNav for routes that are not in noAsideNavRoutes */}
-          <Routes>
-            <Route path="/" element={<HomePage setTitle={setTitle} />} />
-            <Route path="/login" element={<LoginPage setTitle={setTitle} />}/>
-            <Route path="/register" element={<RegisterPage setTitle={setTitle} />}/>
-            <Route path="/leaderboard" element={<LeaderboardPage setTitle={setTitle} />} />
-            <Route path="/profile" element={
-              <PrivateRoute accessible={false}>
-                <Profile setTitle={setTitle} />
-              </PrivateRoute>
+    <>
+      <AsideNav title={title}>
+        <Routes>
+          <Route path="/" element={<HomePage setTitle={setTitle} />} />
+          <Route path="/login" element={<LoginPage setTitle={setTitle} />} />
+          <Route path="/register" element={<RegisterPage setTitle={setTitle} />} />
+          <Route path="/leaderboard" element={<LeaderboardPage setTitle={setTitle} />} />
+          <Route path="/profile" element={<Profile setTitle={setTitle} />} />
+          <Route path="/about" element={<About setTitle={setTitle} />} />
+          <Route path="/arena" element={
+            <PrivateRoute accessible={false}>
+              <RandomGame setTitle={setTitle} />
+            </PrivateRoute>
+          } />
+        </Routes>
+      </AsideNav>
+    </>
 
-            }/>
-            <Route path="/about" element={<About setTitle={setTitle} />} />
-            <Route path="/arena" element={
-              <PrivateRoute accessible={false}>
-                <Arena setTitle={setTitle} />
-              </PrivateRoute>
-            } />
-          </Routes>
-        </AsideNav>}
-
-        {/* Render these routes without the AsideNav */}
-        {isNoAsideNavRoute && (
-            <Routes>
-              <Route path="/login" element={<LoginPage setTitle={setTitle} />} />
-              <Route path="/register" element={<RegisterPage setTitle={setTitle} />} />
-            </Routes>
-        )}
-      </>
-  );
+  )
 }
 
 export default App;

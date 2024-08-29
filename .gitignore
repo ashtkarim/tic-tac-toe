@@ -1,5 +1,8 @@
 data
 server/node_modules
 client/node_modules
-
+server/dest
 /build
+server/.env
+server/package-lock.json
+client/package-lock.json

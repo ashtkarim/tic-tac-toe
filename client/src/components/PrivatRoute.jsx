@@ -28,6 +28,7 @@ const PrivateRoute = ({ children, accessible=true }) => {
             try {
                 const res = await request.get("http://127.0.0.1:5000/@me")
                 if (res.status === 200) {
+                    console.log(res);
                     setUser(res.data.user)
                     setIsAuthenticated(true);
                 } else {
