@@ -1,11 +1,31 @@
-import AsideNav from "./AsideNav";
-import Board from "../components/board.jsx";
+import './HomePage.css'
+import UserCard from "../components/userCard.jsx";
+import { Link } from 'react-router-dom';
 
-function HomePage() {
+function CardsBrand() {
+  return <div class="cardsBrand__container">
+    <div className="floatCard" id="c1"><UserCard avatar="/user_avatar1.jpg" /></div>
+    <div className="floatCard" id="c2"><UserCard avatar="/user_avatar2.png" /></div>
+    <div className="floatCard" id="c3"><UserCard avatar="/user_avatar3.jpg" /></div>
+    <div className="floatCard" id="c4"><UserCard avatar="/user_avatar1.jpg" /></div>
+  </div>
+}
+
+function HomePage({ setTitle }) {
+  setTitle('Welcome on the tic tac toe game!');
+
   return (
-    <div>
-        <Board/>
-    </div>
+    <div className="grid grid-cols-1 md:grid-cols-2">
+      <div className="flex flex-col">
+        <div className='px-14 md:px-32 mb-16'>
+          <img src="/brand_logo.svg" />
+        </div>
+        <Link to="/login" className='w-full text-center font-bold text-xl border border-secondary bg-primary rounded-full py-2 text-white hover:bg-primaryLighter focus:border-white'>Let's play</Link>
+      </div>
+      <div className="relative flex mt-14 md:block hidden">
+        <CardsBrand />
+      </div>
+    </div >
   )
 }
 
