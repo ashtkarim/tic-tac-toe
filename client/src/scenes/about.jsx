@@ -8,6 +8,7 @@ const team = [
     'ashtkarim',
     'RadouaneAbn',
     'naanaa59',
+    'Matsadura'
 ]
 
 function TeamCard({ avatar, username }) {
