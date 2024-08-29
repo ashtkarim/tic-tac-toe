@@ -82,7 +82,7 @@ To run the project locally, follow these steps:
 
 ## Usage
 
-- **Single Player Mode:** Select the desired difficulty and play against the CPU.
+- **Single Player Mode:** Play against the CPU.
 - **Multiplayer Mode:** Enter the lobby, invite a friend or join an available room, and start playing.
 
 ## Contributing
