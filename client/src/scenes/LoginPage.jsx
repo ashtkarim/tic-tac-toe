@@ -2,7 +2,9 @@ import React, { FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
 // import './LoginPage.css';
 
-function LoginPage() {
+function LoginPage({ setTitle }) {
+  setTitle('Sign in');
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState('');
@@ -14,12 +16,12 @@ function LoginPage() {
     fetch('http://127.0.0.1:3000/login', {
       method: 'POST',
       headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json' // Optional: to accept JSON response
+        'Content-Type': 'application/json',
+        'Accept': 'application/json' // Optional: to accept JSON response
       },
       credentials: 'include',
       body: JSON.stringify({
-          email, password
+        email, password
       })
     }).then((res) => {
       if (res.ok) {
@@ -29,31 +31,30 @@ function LoginPage() {
         setErrorMsg('UNAUTHORIZED')
       }
     }).catch(() => {
-      console.log('error happend')
+      console.log('error happen')
     })
   };
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold text-center">Login</h2>
+    <div className="text-white bg-primary flex justify-center rounded-lg py-5">
+      <div className="w-full max-w-md p-8 space-y-6 bg-primary rounded-lg shadow-md">
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="space-y-2">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+            <label htmlFor="email" className="block text-sm font-medium">Username</label>
             <input
               type="email"
               id="email"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-secondary bg-primaryLight rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
           <div className="space-y-2">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+            <label htmlFor="password" className="block text-sm font-medium">Password</label>
             <input
               type="password"
               id="password"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-secondary bg-primaryLight rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -66,16 +67,16 @@ function LoginPage() {
           )}
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 text-white bg-primaryLighter rounded-md hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             Login
           </button>
         </form>
         <div className="text-center">
           <p className="text-sm text-gray-600">
-            Don't have an account?{' '}
+            First time?{' '}
             <Link to="/register" className="text-blue-500 hover:text-blue-600">
-              Register here
+              Create account
             </Link>.
           </p>
         </div>
