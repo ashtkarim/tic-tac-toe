@@ -100,16 +100,15 @@ const Board = () => {
         return (
             <div
                 key={index}
-                className={`flex items-center justify-center border ${
-                    isWinningSquare ? 'bg-yellow-200' : ''
-                } w-full h-full`}
+                className={`flex items-center justify-center border p-2 ${isWinningSquare ? 'bg-yellow-200' : ''
+                    } w-full h-full`}
                 onClick={() => handleClick(index)}
             >
                 {symbol && (
                     <img
                         src={symbolImage}
                         alt={`${symbol} symbol`}
-                        className=" w-[150px] h-[50px]"
+                        className="w-full"
                     />
                 )}
             </div>
@@ -134,20 +133,20 @@ const Board = () => {
 
     return (
         <div className="min-h-auto w-auto bg-primary flex items-center justify-center p-4">
-            <div className="flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-8 w-full max-w-6xl">
+            <div className="flex flex-col lg:flex-row space-y-8 md:space-y-0 md:space-x-8 w-full max-w-6xl ">
                 {/* Board with Player Info */}
                 <div className="relative bg-primaryLight bg-opacity-40 backdrop-blur-lg p-8 rounded-lg shadow-lg flex-1 flex flex-col items-center justify-center">
-                    <div className="flex justify-between items-center mb-4 absolute top-4 left-4 right-4">
+                    <div className="flex justify-around w-full items-center mb-5">
                         <div className="flex items-center space-x-2">
                             <img src={xIcon} alt="Player X" className="w-8 h-8 md:w-10 md:h-10" />
-                            <span className="text-white font-bold">{timeLeftX}s</span>
+                            <span className="text-white w-6 font-bold">{timeLeftX}s</span>
                         </div>
                         <div className="flex items-center space-x-2">
                             <img src={oIcon} alt="Player O" className="w-8 h-8 md:w-10 md:h-10" />
-                            <span className="text-white font-bold">{timeLeftO}s</span>
+                            <span className="text-white w-6 font-bold">{timeLeftO}s</span>
                         </div>
                     </div>
-                    <div className="relative grid grid-cols-3 gap-0 w-[300px] max-w-md h-[300px] border border-primaryLight bg-primaryLighter bg-opacity-20 backdrop-blur-md">
+                    <div className="relative grid grid-cols-3 grid-rows-3 gap-0 w-full aspect-square max-w-[300px] border border-primaryLight bg-primaryLighter bg-opacity-20 backdrop-blur-md">
                         {Array(9).fill(null).map((_, index) => renderSquare(index))}
                     </div>
                     {winner && (
@@ -155,7 +154,7 @@ const Board = () => {
                             {winner === 'Draw' ? 'Draw!' : `Player ${winner.toUpperCase()} Wins!`}
                         </div>
                     )}
-                    <div className="absolute bottom-4 left-4 right-4 flex justify-between">
+                    <div className="w-full mt-5 flex justify-between gap-2 sm:flex-row flex-col">
                         <button
                             onClick={handlePlayAgain}
                             className="px-4 py-2 bg-secondary text-white rounded-md shadow-md hover:bg-secondaryLight"
@@ -172,7 +171,7 @@ const Board = () => {
                 </div>
 
                 {/* Chat Board */}
-                <div className="flex flex-col bg-primaryLight bg-opacity-40 backdrop-blur-lg p-6 rounded-lg shadow-lg w-full md:w-96 h-96">
+                <div className="flex flex-col bg-primaryLight bg-opacity-40 backdrop-blur-lg p-6 rounded-lg shadow-lg md:w-1/3 max-h-[490px]">
                     <div className="text-white font-bold mb-4">Chat Board</div>
                     <div className="flex-1 overflow-y-auto mb-4">
                         {messages.map((msg, index) => (
@@ -181,29 +180,28 @@ const Board = () => {
                                 className={`flex ${msg.fromMe ? 'justify-end' : 'justify-start'} mb-2`}
                             >
                                 <div
-                                    className={`px-4 py-2 rounded-lg ${
-                                        msg.fromMe
-                                            ? 'bg-secondary text-white'
-                                            : 'bg-white text-primary'
-                                    }`}
+                                    className={`px-4 py-2 text-wrap rounded-lg ${msg.fromMe
+                                        ? 'bg-secondary text-white'
+                                        : 'bg-white text-primary'
+                                        }`}
                                 >
                                     {msg.text}
                                 </div>
                             </div>
                         ))}
                     </div>
-                    <div className="flex">
+                    <div className="flex items-center justify-center flex-col gap-2">
                         <input
                             type="text"
                             value={newMessage}
                             onChange={(e) => setNewMessage(e.target.value)}
                             onKeyDown={handleKeyDown}
                             placeholder="Type a message..."
-                            className="flex-1 px-4 py-2 border rounded-lg"
+                            className="px-4 py-2 border w-full rounded-lg"
                         />
                         <button
                             onClick={handleSubmitMessage}
-                            className="px-4 py-2 bg-secondary text-white rounded-lg ml-2"
+                            className="px-4 py-2 bg-secondary text-white w-full rounded-lg"
                         >
                             Send
                         </button>

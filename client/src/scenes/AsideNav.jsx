@@ -147,7 +147,7 @@ export default function AsideNav({ children, title }) {
 					</nav>
 				</div> : null}
 				<main className={`flex-1 min-h-screen bg-primaryLight ${expand ? 'md:pl-64' : 'md:pl-16'}`}>
-					<div className="px-10 pt-16">
+					<div className="px-1 md:px-10 pt-16">
 						<div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 mb-5">
 							<h1 className="text-4xl font-semibold text-white text-center sm:text-start">{title}</h1>
 						</div>
