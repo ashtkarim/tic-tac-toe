@@ -1,12 +1,15 @@
 
 import { FaAt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function UserCard({ avatar, username, rate, rank }) {
     return (
-        <div className="col-span-1 flex flex-col bg-white text-center shadow w-52 relative border border-secondary border-2" >
+        <div className="flex flex-col bg-white text-center w-52 relative border-secondary border-2 shadow-lg shadow-primary" >
             <div className="flex flex-1 flex-col p-4">
-                <img className="mx-auto flex-shrink-0" src={avatar} alt="avatar of the user" />
-                <h3 className="mt-6 text-2xl font-bold text-secondary truncate flex justify-center"><FaAt />{username}</h3>
+                <img className="mx-auto flex-shrink-0 border-2 border-primary" src={avatar} alt="avatar of the user" />
+                <Link className="mt-6 text-2xl font-bold text-secondary truncate flex justify-center hover:text-primary" to={`/${username}`}>
+                    <FaAt />{username}
+                </Link>
                 <dl className="mt-1 flex flex-grow flex-col justify-between">
                     <div className="flex justify-center items-center gap-1">
                         <dt className="text-primaryDark">Rate:</dt>
