@@ -54,7 +54,7 @@ export default function About({ setTitle }) {
     return (
         <div className='grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1  grid-wrap justify-items-center m-auto w-fit gap-6'>
             {gitInfo.map((user) => (
-                <TeamCard avatar={user.avatar} username={user.username} />
+                <TeamCard key={user.username} avatar={user.avatar} username={user.username} />
             ))}
         </div>
     );

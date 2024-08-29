@@ -1,14 +1,17 @@
-import React, { FormEvent, useState } from 'react';
+import React, {FormEvent, useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 
 function RegisterPage({ setTitle }) {
-  setTitle('Sign up');
+
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
 
+  useEffect(() => {
+    setTitle('Sign up');
+  }, [setTitle]);
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle registration logic here

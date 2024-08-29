@@ -1,23 +1,26 @@
-import React, { FormEvent, useState } from "react";
+import React, {FormEvent, useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 // import './LoginPage.css';
 
 function LoginPage({ setTitle }) {
-  setTitle('Sign in');
+
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState('');
 
+  useEffect(() => {
+    setTitle('Sign in');
+  }, [setTitle]);
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrorMsg('');
     // console.log(email, password)
-    fetch('http://127.0.0.1:3000/login', {
+    fetch('http://127.0.0.1:3000/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json' // Optional: to accept JSON response
+        // 'Accept': 'application/json' // Optional: to accept JSON response
       },
       credentials: 'include',
       body: JSON.stringify({
