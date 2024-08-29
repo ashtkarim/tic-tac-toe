@@ -1,7 +1,7 @@
 
 
 
-# Tic Tac Toe Game
+# Tic Tac Toe Online
 
 ![image](https://github.com/user-attachments/assets/463aa34a-5007-4925-a9ed-bef6f4a327a0)
 
