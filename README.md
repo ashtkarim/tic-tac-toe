@@ -87,7 +87,7 @@ To run the project locally, follow these steps:
 
 ## Contributing
 
-If you'd like to contribute, please fork the repository and use a feature branch. Pull requests are warmly welcome.
+If you'd like to contribute, please read [CONTRIBUTIONS](./CONTRIBUTING.md), Contributions are warmly welcome.
 
 
 ## Authors
