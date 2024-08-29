@@ -27,9 +27,7 @@ const App = () => {
           <Route path="/profile" element={<Profile setTitle={setTitle} />} />
           <Route path="/about" element={<About setTitle={setTitle} />} />
           <Route path="/arena" element={
-            <PrivateRoute accessible={false}>
               <RandomGame setTitle={setTitle} />
-            </PrivateRoute>
           } />
         </Routes>
       </AsideNav>

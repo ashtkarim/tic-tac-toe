@@ -16,8 +16,6 @@ const socket = io('http://127.0.0.1:3000')
 function RandomGame() {
   const initialBoard = Array(9).fill(null);
   const [board, setBoard] = useState(initialBoard);
-  const [timeLeftX, setTimeLeftX] = useState(30);
-  const [timeLeftO, setTimeLeftO] = useState(30);
   const [winner, setWinner] = useState(null);
   const [showPopup, setShowPopup] = useState(false); // For confirmation popup
   const navigate = useNavigate();
@@ -55,7 +53,7 @@ function RandomGame() {
     // sets the turn of each user
     // so that each player plays one time
     socket.on('turn', (data) => {
-      console.log(data);
+      // console.log(data);
       setMyTurn(data.turn);
     })
 
@@ -67,13 +65,13 @@ function RandomGame() {
 
     // updates the board after each round played
     socket.on('update_board', (data) => {
-      console.log(data)
+      // console.log(data)
       setBoard(data.board);
     })
 
     // switch turns after each round
     socket.on('update_turn', ({ turn }) => {
-      console.log('current game:', turn);
+      // console.log('current game:', turn);
       setMyTurn(turn);
     })
 
@@ -88,12 +86,13 @@ function RandomGame() {
   }, [socket]);
 
   const handleClick = (index) => {
+    // when a player clicks o a square (round played)
     if (board[index] || winner) return;
     if (!myTurn) {
       alert('not your turn !!!');
       return;
     }
-    console.log(index);
+    // console.log(index);
     socket.emit('player_move',
       {
         index: index,
