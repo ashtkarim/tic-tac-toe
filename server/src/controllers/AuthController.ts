@@ -44,20 +44,19 @@ async function signin(req: Request<{}, {}, LoginRequestBody>, res: Response) {
 }
 
 async function signup(req: Request<{}, {}, LoginRequestBody>, res: Response) {
-    const {username, email, password} = req.body;
+    const {username, password} = req.body;
     /**
      * This function is responsible for the signup process
      */
-    if (!username || !email || !password)
+    if (!username || !password)
         return res.status(401).send({'status': 'body not complete'})
-    const user = await User.findOne({email});
+    const user = await User.findOne({username});
 
     if (user !== null) {
-        return res.status(401).send({'status': 'email already exists'});
+        return res.status(401).send({'status': 'username already exists'});
     } else {
         const newUser = new User({
             username: username,
-            email: email,
             password: await hashPassword(password)
         })
         newUser.save();
