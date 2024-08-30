@@ -58,7 +58,7 @@ const PrivateRoute = ({ children, accessible=true }) => {
                 {children}
             </AuthContext.Provider>
         ) : (
-            <Navigate to="/login" />
+            <Navigate to="/signin" />
         )
     );
 };
