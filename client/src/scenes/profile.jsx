@@ -3,7 +3,7 @@ import { PiEqualsFill } from "react-icons/pi";
 import { FaAt } from "react-icons/fa";
 import UserCard from "../components/userCard";
 import { Link } from "react-router-dom";
-import {useAuth} from "../components/PrivatRoute.jsx";
+import { useAuth } from "../components/AuthProvider";
 import {useEffect} from "react";
 const gamesHistory = [
     {
@@ -36,7 +36,7 @@ export default function Profile({ setTitle }) {
     useEffect(() => {
         setTitle('Hello you :)');
     }, [setTitle]);
-    const { user, logout } = useAuth();
+    const { user, setUser } = useAuth();
 
     return <>
         <div className="flex items-center justify-center md:justify-start">

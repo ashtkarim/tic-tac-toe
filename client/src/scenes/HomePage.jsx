@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 
 function CardsBrand() {
-  return <div class="cardsBrand__container">
+  return <div className="cardsBrand__container">
     <div className="floatCard" id="c1"><UserCard avatar="/user_avatar1.jpg" /></div>
     <div className="floatCard" id="c2"><UserCard avatar="/user_avatar2.png" /></div>
     <div className="floatCard" id="c3"><UserCard avatar="/user_avatar3.jpg" /></div>

@@ -1,28 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { useContext, createContext } from 'react';
 import request from './request';
 import Cookies from 'js-cookie';
-
-const AuthContext = createContext();
-export const useAuth = () => {
-    const context = useContext(AuthContext);
-    if (!context) {
-        throw new Error("useAuth must be used within an AuthProvider");
-    }
-    return context;
-};
+import { useAuth } from './AuthProvider';
 
 
 const PrivateRoute = ({ children, accessible=true }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [doneLoading, setDoneLoading] = useState(false);
-    const [user, setUser] = useState(null);
-
-    const logout = () => {
-        setUser(null);
-        setIsAuthenticated(false);
-    }
+    const { user, setUser } = useAuth();
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -51,16 +37,12 @@ const PrivateRoute = ({ children, accessible=true }) => {
 
     if (accessible) {
         return (
-            <AuthContext.Provider value={{ user, logout }}>
-                {children}
-            </AuthContext.Provider>
+                <>{children}</>
         )
     }
     return (
         isAuthenticated ? (
-            <AuthContext.Provider value={{ user }}>
-                {children}
-            </AuthContext.Provider>
+            <>{children}</>
         ) : (
             <Navigate to="/signin" />
         )
