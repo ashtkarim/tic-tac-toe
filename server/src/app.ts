@@ -11,6 +11,7 @@ import { all } from "axios";
 import { Socket } from "dgram";
 import { disconnect } from "process";
 const { v4: getId } = require('uuid');
+import User from './Models/User';
 
 const WINNING_POS = [
   [0, 1, 2],
@@ -107,35 +108,48 @@ function startSocket(socket) {
   });
 
   // the logic of the game play
-  socket.on('player_move', (data) => {
-    // console.log(data);
+  socket.on('player_move', async (data) => {
     const board = data.board;
+    const playerId = data.playerId;
+    const roomId = data.roomId;
+    // console.log(data);
+
     if (board[data.index] === null) {
-      // puts the x or o in the board
-      // player 1 will have x and the other will have o
-      board[data.index] = icons[data.playerId];
-      // console.log(board);
+      board[data.index] = icons[playerId];
 
-      // update the board for both users
-      io.in(data.roomId).emit('update_board', {
-        board
-      });
+      io.in(roomId).emit('update_board', { board });
 
-      // check if the player won
-      if (checkWinner(board, icons[data.playerId])) {
-        io.to(allGames[data.roomId][0]).emit('end_game', {winner: data.playerId === '1'})
-        io.to(allGames[data.roomId][1]).emit('end_game', {winner: data.playerId === '2'})
-      // if the game ended with a draw
+      const player1Id = allGames[roomId][0];
+      const player2Id = allGames[roomId][1];
+
+      if (checkWinner(board, icons[playerId])) {
+        // Update winner and loser statistics
+        const winnerId = playerId === '1' ? player1Id : player2Id;
+        const loserId = playerId === '1' ? player2Id : player1Id;
+
+        // Increase score by 10 for a win
+        await User.findByIdAndUpdate(winnerId, { $inc: { wins: 1, score: 10 } });
+        // Decrease score by 5 for a loss
+        await User.findByIdAndUpdate(loserId, { $inc: { losses: 1, score: -5 } });
+
+        io.to(player1Id).emit('end_game', { winner: playerId === '1' });
+        io.to(player2Id).emit('end_game', { winner: playerId === '2' });
+
       } else if (!board.includes(null)) {
-        io.to(allGames[data.roomId][0]).emit('end_game', {draw: true})
-        io.to(allGames[data.roomId][1]).emit('end_game', {draw: true})
-      // revers turns
+        // Update draw statistics
+        // Increase score by 2 for a draw
+        await User.findByIdAndUpdate(player1Id, { $inc: { draws: 1, score: 2 } });
+        await User.findByIdAndUpdate(player2Id, { $inc: { draws: 1, score: 2 } });
+
+        io.to(player1Id).emit('end_game', { draw: true });
+        io.to(player2Id).emit('end_game', { draw: true });
+
       } else {
-        io.to(allGames[data.roomId][0]).emit('update_turn', {turn: data.playerId === '2'})
-        io.to(allGames[data.roomId][1]).emit('update_turn', {turn: data.playerId === '1'})
+        io.to(player1Id).emit('update_turn', { turn: playerId === '2' });
+        io.to(player2Id).emit('update_turn', { turn: playerId === '1' });
       }
     }
-  })
+  });
 
   socket.on('disconnect', () => {
     console.log(`player disconnected ${socketId}`)
