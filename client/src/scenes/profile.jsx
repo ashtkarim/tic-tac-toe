@@ -2,6 +2,9 @@ import { AiFillPlusSquare, AiFillMinusSquare } from "react-icons/ai";
 import { PiEqualsFill } from "react-icons/pi";
 import { FaAt } from "react-icons/fa";
 import UserCard from "../components/userCard";
+import { Link } from "react-router-dom";
+import {useAuth} from "../components/PrivatRoute.jsx";
+import {useEffect} from "react";
 const gamesHistory = [
     {
         OpponentUsername: 'doomsday',
@@ -29,12 +32,16 @@ const gamesHistory = [
 
 
 export default function Profile({ setTitle }) {
-    setTitle('Hello you :)');
+
+    useEffect(() => {
+        setTitle('Hello you :)');
+    }, [setTitle]);
+    const { user, logout } = useAuth();
 
     return <>
         <div className="flex items-center justify-center md:justify-start">
             <UserCard
-                username={'alien'}
+                username={user.username}
                 avatar={'/user_avatar1.jpg'}
                 rate={'12'}
                 rank={'15'}
@@ -70,8 +77,9 @@ export default function Profile({ setTitle }) {
                                                         <img className="h-10 w-10 rounded-full border border-primary" src={game.OpponentAvatar} alt="" />
                                                     </div>
                                                     <div className="ml-4">
-                                                        <div className="font-medium text-white flex items-center"><span className="text-secondary"><FaAt /></span>{game.OpponentUsername}</div>
-
+                                                        <Link to={`/${game.OpponentUsername}`} className="font-medium text-white flex items-center hover:text-secondary">
+                                                            <span className="text-secondary"><FaAt /></span>{game.OpponentUsername}
+                                                        </Link>
                                                     </div>
                                                 </div>
                                             </td>

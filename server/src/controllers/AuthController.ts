@@ -15,13 +15,21 @@ async function me(req: Request<{}, {}, LoginRequestBody>, res: Response) {
      * using Jwt auth
      */
     const token = req.cookies._token;
-    const {userId} = verifyToken(token);
-    const user = await User.findById(userId);
+    // let userId;
+    try {
+        const {userId} = verifyToken(token);
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(401).send({'status': 'invalid token'});
+        }
+        return res.status(200).send(JSON.stringify({"user": {
+            userName: user?.username,
+            id: user?.id
+        }}));
+    } catch {
+        return res.status(401).send({'status': 'invalid token'});
+    }
 
-    return res.status(200).send(JSON.stringify({"user": {
-        userName: user?.username,
-        id: user?.id
-    }}));
 
 }
 
@@ -29,8 +37,8 @@ async function signin(req: Request<{}, {}, LoginRequestBody>, res: Response) {
     /**
      * This function responsible for the signin process
      */
-    const {email, password} = req.body;
-    const user = await User.findOne({email});
+    const {username, password} = req.body;
+    const user = await User.findOne({username});
 
     if (user === null) {
         return res.status(404).send({'status': 'user not found'});
@@ -44,20 +52,19 @@ async function signin(req: Request<{}, {}, LoginRequestBody>, res: Response) {
 }
 
 async function signup(req: Request<{}, {}, LoginRequestBody>, res: Response) {
-    const {username, email, password} = req.body;
+    const {username, password} = req.body;
     /**
      * This function is responsible for the signup process
      */
-    if (!username || !email || !password)
+    if (!username || !password)
         return res.status(401).send({'status': 'body not complete'})
-    const user = await User.findOne({email});
+    const user = await User.findOne({username});
 
     if (user !== null) {
-        return res.status(401).send({'status': 'email already exists'});
+        return res.status(401).send({'status': 'username already exists'});
     } else {
         const newUser = new User({
             username: username,
-            email: email,
             password: await hashPassword(password)
         })
         newUser.save();

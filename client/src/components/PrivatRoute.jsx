@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useContext, createContext } from 'react';
 import request from './request';
+import Cookies from 'js-cookie';
 
 const AuthContext = createContext();
 export const useAuth = () => {
@@ -14,7 +15,7 @@ export const useAuth = () => {
 
 
 const PrivateRoute = ({ children, accessible=true }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState();
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [doneLoading, setDoneLoading] = useState(false);
     const [user, setUser] = useState(null);
 
@@ -26,16 +27,19 @@ const PrivateRoute = ({ children, accessible=true }) => {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const res = await request.get("http://127.0.0.1:5000/@me")
+                const res = await request.get("http://127.0.0.1:3000/@me")
                 if (res.status === 200) {
                     console.log(res);
                     setUser(res.data.user)
                     setIsAuthenticated(true);
                 } else {
+                    Cookies.remove('_token');
                     setIsAuthenticated(false);
                 }
             } catch {
-                console.log("UNAUTHERIZED");
+                Cookies.remove('_token');
+                // console.log("UNAUTHERIZED");
+                setIsAuthenticated(false);
             }
             finally {
                 setDoneLoading(true);
@@ -52,14 +56,13 @@ const PrivateRoute = ({ children, accessible=true }) => {
             </AuthContext.Provider>
         )
     }
-
     return (
         isAuthenticated ? (
             <AuthContext.Provider value={{ user }}>
                 {children}
             </AuthContext.Provider>
         ) : (
-            <Navigate to="/login" />
+            <Navigate to="/signin" />
         )
     );
 };
