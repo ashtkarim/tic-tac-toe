@@ -8,6 +8,23 @@ interface LoginRequestBody {
     password: string;
 }
 
+async function getTopUsers(req: Request, res: Response) {
+    try {
+        const topUsers = await User.find({})
+            .sort({ score: -1 }) // Sort by score in descending order
+            .limit(10) // Limit to top 10
+            .select('username avatar wins losses draws timePlayed score') // Select necessary fields
+            .exec();
+        
+        console.log(topUsers);
+
+        return res.status(200).json({ players: topUsers });
+    } catch (error) {
+        return res.status(500).send({ status: 'error', message: 'Failed to fetch top users' });
+    }
+}
+
+
 
 async function me(req: Request<{}, {}, LoginRequestBody>, res: Response) {
     /**
@@ -72,4 +89,4 @@ async function signup(req: Request<{}, {}, LoginRequestBody>, res: Response) {
     }
 }
 
-export { signin, signup, me };
+export { signin, signup, me, getTopUsers };

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { signin, signup, me } from "../controllers/AuthController";
+import { signin, signup, me, getTopUsers } from "../controllers/AuthController";
 
 const users = Router();
 
@@ -11,6 +11,6 @@ users.post('/signin', signin);
 
 users.post('/signup', signup);
 
-// users.post('/signout')
+users.get('/top', getTopUsers);
 
 export default users;

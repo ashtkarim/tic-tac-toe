@@ -12,6 +12,7 @@ import { Socket } from "dgram";
 import { disconnect } from "process";
 const { v4: getId } = require('uuid');
 import User from './Models/User';
+import { Console } from "console";
 
 const WINNING_POS = [
   [0, 1, 2],
@@ -131,12 +132,20 @@ function startSocket(socket) {
       if (checkWinner(board, icons[playerId])) {
         // Update winner and loser statistics
         const winnerId = playerId === '1' ? 0 : 1;
-        const loserId = playerId === '1' ? 0 : 1;
+        const loserId = playerId === '2' ? 0 : 1;
+        const loser = await User.findById(allGames[roomId][loserId].userId);
+
+        console.log(`${winnerId} => ${loserId}`)
+        console.log(allGames[roomId]);
 
         // Increase score by 10 for a win
+
         await User.findByIdAndUpdate(allGames[roomId][winnerId].userId, { $inc: { wins: 1, score: 10 } });
         // Decrease score by 5 for a loss
-        await User.findByIdAndUpdate(allGames[roomId][loserId].userId, { $inc: { losses: 1, score: -5 } });
+        if (loser.score > 0) {
+          await User.findByIdAndUpdate(allGames[roomId][loserId].userId, { $inc: { score: -5 } });
+        }
+        await User.findByIdAndUpdate(allGames[roomId][loserId].userId, { $inc: { losses: 1} });
 
         io.to(player1.socketId).emit('end_game', { winner: playerId === '1' });
         io.to(player2.socketId).emit('end_game', { winner: playerId === '2' });

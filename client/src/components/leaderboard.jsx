@@ -1,32 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import avatar from '../images/cat_avatar.png'
-const players = [
-    {
-        id: 1,
-        name: 'Luise',
-        avatar: avatar,
-        flag: '/path/to/germany-flag.png',
-        wins: 17,
-        losses: 0,
-        draws: 102,
-        timePlayed: '00h 12m',
-        score: 2242,
-    },
-    {
-        id: 2,
-        name: '_Alex_',
-        avatar: avatar,
-        flag: '/path/to/venezuela-flag.png',
-        wins: 44,
-        losses: 1,
-        draws: 70,
-        timePlayed: '00h 14m',
-        score: 1910,
-    },
-    // Add more players...
-];
+// const players = [
+//     {
+//         id: 1,
+//         name: 'Luise',
+//         avatar: avatar,
+//         flag: '/path/to/germany-flag.png',
+//         wins: 17,
+//         losses: 0,
+//         draws: 102,
+//         timePlayed: '00h 12m',
+//         score: 2242,
+//     },
+//     {
+//         id: 2,
+//         name: '_Alex_',
+//         avatar: avatar,
+//         flag: '/path/to/venezuela-flag.png',
+//         wins: 44,
+//         losses: 1,
+//         draws: 70,
+//         timePlayed: '00h 14m',
+//         score: 1910,
+//     },
+//     // Add more players...
+// ];
 
 const Leaderboard = () => {
+    const [players, setPlayers] = useState([]);
+    useEffect(() => {
+        // Fetch top 10 players from the backend
+        fetch('http://127.0.0.1:3000/top')
+            .then(response => response.json())
+            .then(data => {
+                setPlayers(data.players);
+            })
+            .catch(error => {
+                console.error('Error fetching leaderboard data:', error);
+            });
+    }, []);
     return (
         <div className="flex flex-col items-center  min-h-screen  p-4">
             <div className="w-full max-w-4xl bg-gray-800 rounded-xl shadow-lg">
@@ -55,11 +67,7 @@ const Leaderboard = () => {
                                     {index + 1}
                                 </td>
                                 <td className="py-4 px-6 text-lg flex items-center">
-                                    <img
-                                        src={player.avatar}
-                                        alt={`${player.name} avatar`}
-                                        className="w-8 h-8 rounded-full mr-3"
-                                    />
+                                    <p className="name">{player.username}</p>
                                     <span>{player.name}</span>
                                 </td>
                                 <td className="py-4 px-6 text-lg text-center hidden md:table-cell">

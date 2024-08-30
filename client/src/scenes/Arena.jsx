@@ -7,7 +7,7 @@ import { io } from 'socket.io-client';
 import RotatingMsg from '../components/RotatingMsg.jsx';
 import { useAuth } from '../components/AuthProvider.jsx';
 
-function Arena({setTitle}) {
+function Arena({ setTitle }) {
   useEffect(() => {
     setTitle("Who you will beat today!!!");
   }, [setTitle]);
@@ -25,6 +25,7 @@ function Arena({setTitle}) {
   const [playerId, setPlayerId] = useState(null);
   const [isDrow, setIsDraw] = useState(false);
   const [socket, setSocket] = useState(null); // Add a state for socket
+  const [msgBox, setMsgBox] = useState(false);
 
   useEffect(() => {
     setTitle("Who you will beat today!!!");
@@ -39,7 +40,7 @@ function Arena({setTitle}) {
     newSocket.on('connect', () => {
       // console.log('Connected to the server with socket ID:', newSocket.id);
       // You can also emit data or perform actions after connecting
-      newSocket.emit('join_game', {userId: user.id});
+      newSocket.emit('join_game', { userId: user.id });
     });
 
     // Handle the receive message from the other user
@@ -54,8 +55,10 @@ function Arena({setTitle}) {
 
     // Clear the room if one player exits
     newSocket.on('disconnected', () => {
-      alert('other player exited');
-      navigate('/');
+      setMsgBox(true);
+      setTimeout(() => {
+        navigate('/');
+      }, 3000);
     });
 
     // Sets the turn of each user so that each player plays one time
@@ -86,6 +89,9 @@ function Arena({setTitle}) {
       } else {
         setWinner(winner);
       }
+      setTimeout(() => {
+        navigate('/');
+      }, 3000);
     });
 
     // Cleanup the socket connection when the component unmounts
@@ -105,6 +111,7 @@ function Arena({setTitle}) {
       index: index,
       roomId: roomId,
       board: board,
+      userId: user.id,
       playerId: playerId,
     });
   };
@@ -119,11 +126,11 @@ function Arena({setTitle}) {
   }
 
   // clear the board for a new game
-  const handlePlayAgain = () => {
-    setBoard(initialBoard);
-    setWinner(null);
-    setIsDraw(false);
-  };
+  // const handlePlayAgain = () => {
+  //   setBoard(initialBoard);
+  //   setWinner(null);
+  //   setIsDraw(false);
+  // };
 
   // check if user want to exit
   const handleLeave = () => {
@@ -191,12 +198,6 @@ function Arena({setTitle}) {
           )}
           <div className="absolute bottom-4 left-4 right-4 flex justify-between">
             <button
-              onClick={handlePlayAgain}
-              className="px-4 py-2 bg-secondary text-white rounded-md shadow-md hover:bg-secondaryLight"
-            >
-              Play Again
-            </button>
-            <button
               onClick={handleLeave}
               className="px-4 py-2 bg-red-500 text-white rounded-md shadow-md hover:bg-red-600"
             >
@@ -211,16 +212,14 @@ function Arena({setTitle}) {
             {messages.map((msg, index) => (
               <div
                 key={index}
-                className={`flex ${
-                  msg.fromMe ? 'justify-end' : 'justify-start'
-                } mb-2`}
+                className={`flex ${msg.fromMe ? 'justify-end' : 'justify-start'
+                  } mb-2`}
               >
                 <div
-                  className={`px-4 py-2 rounded-lg ${
-                    msg.fromMe
+                  className={`px-4 py-2 rounded-lg ${msg.fromMe
                       ? 'bg-secondary text-white'
                       : 'bg-white text-primary'
-                  }`}
+                    }`}
                 >
                   {msg.text}
                 </div>
@@ -246,6 +245,16 @@ function Arena({setTitle}) {
           </div>
         </div>
       </div>
+
+      {msgBox && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-8 rounded-lg shadow-lg">
+            <h2 className="text-xl font-bold mb-4">The other player left the room</h2>
+            <p className="text-center">clearing the room</p>
+          </div>
+        </div>
+      )}
+
 
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
