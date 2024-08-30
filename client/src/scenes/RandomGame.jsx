@@ -126,7 +126,7 @@ function RandomGame() {
   //       } else if (playerId === '2' && timeLeftO === 0) {
   //         socket.emit('time_out', { playerId, roomId });
   //       }
-  
+
   //       if (playerId === '1') {
   //         setTimeLeftX(prev => Math.max(prev - 1, 0));
   //       } else {
@@ -134,7 +134,7 @@ function RandomGame() {
   //       }
   //     }
   //   }, 1000);
-  
+
   //   return () => clearInterval(timer);
   // }, [myTurn, timeLeftX, timeLeftO, roundUp]);
 
@@ -207,11 +207,11 @@ function RandomGame() {
               <span className="text-white font-bold">{timeLeftO}s</span>
             </div>
           </div> */}
-          {playerId ? 
-          <div className="relative grid grid-cols-3 grid-rows-3 gap-2 w-[400px] h-[400px] border border-primaryLight bg-primaryLighter bg-opacity-20 backdrop-blur-md">
-          {Array(9).fill(null).map((_, index) => renderSquare(index))}
-        </div>
-          : <RotatingMsg/>}
+          {playerId ?
+            <div className="relative grid grid-cols-3 grid-rows-3 gap-2 w-[400px] h-[400px] border border-primaryLight bg-primaryLighter bg-opacity-20 backdrop-blur-md">
+              {Array(9).fill(null).map((_, index) => renderSquare(index))}
+            </div>
+            : <RotatingMsg />}
           {(winner !== null || isDrow) && (
             <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-2xl font-bold">
               {isDrow ? 'DRAW' :
