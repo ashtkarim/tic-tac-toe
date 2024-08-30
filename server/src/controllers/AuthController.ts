@@ -23,7 +23,7 @@ async function me(req: Request<{}, {}, LoginRequestBody>, res: Response) {
             return res.status(401).send({'status': 'invalid token'});
         }
         return res.status(200).send(JSON.stringify({"user": {
-            userName: user?.username,
+            username: user?.username,
             id: user?.id
         }}));
     } catch {

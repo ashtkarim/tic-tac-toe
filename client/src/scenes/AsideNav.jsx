@@ -5,6 +5,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
 import { FaCircleArrowRight, FaCircleArrowLeft } from "react-icons/fa6";
 import { useAuth } from '../components/AuthProvider';
+import Cookies from "js-cookie";
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ');
@@ -17,6 +18,11 @@ export default function AsideNav({ children, title }) {
 	const { user, setUser } = useAuth();
 
 	console.log(user)
+
+	const handeleLogout = () => {
+		setUser(null);
+		Cookies.remove('_token');
+	}
 
 	function updateCurrentPage(id) {
 		const updatedPages = [...navPage].map(page => {
@@ -69,37 +75,41 @@ export default function AsideNav({ children, title }) {
 						</nav>
 					</div>
 					<div className={`flex border-t-2 flex-shrink-0 border-secondary ${expand ? 'p-3' : 'p-1'}`}>
-						{user ?( <Link to="/profile" onClick={NoPageSelected} className="group block w-full flex-shrink-0 hover:bg-primaryLight p-1">
-							<div className="flex items-center">
-								<div>
-									<img
-										className="inline-block w-14 rounded-full"
-										src="/user_avatar1.jpg"
-										alt=""
-									/>
-								</div>
-								{expand ? (
-									<div className="ml-3">
-										<p className="text-lg font-mono text-white">alien</p>
-										<p className="text-xs text-white group-hover:text-white">View profile</p>
+						{user ?(
+							<div className="flex flex-col">
+								<Link to="/profile" onClick={NoPageSelected} className="group block w-full flex-shrink-0 hover:bg-primaryLight p-1">
+									<div className="flex items-center">
+										<div>
+											<img
+												className="inline-block w-14 rounded-full"
+												src="/user_avatar1.jpg"
+												alt=""
+											/>
+										</div>
+										{expand ? (
+											<div className="ml-3">
+												<p className="text-lg font-mono text-white">{user.username}</p>
+												<p className="text-xs text-white group-hover:text-white">View profile</p>
+											</div>
+										) : null}
 									</div>
-								) : null}
-							</div>
-						</Link>) : (
-                            <>
+								</Link>
+								<Link
+									onClick={handeleLogout}
+									to="/"
+									className="border-white text-amber-50 text-center border-2 rounded-md hover:rounded-xl hover:bg-amber-50 hover:text-black transition-all duration-300 ease-in-out p-2 mt-2"
+								>
+									logout
+								</Link>
+							</div>) : (
+                            <div className="flex flex-col text-amber-50">
                                 <Link
-                                    to="/login"
-                                    className="border-gray-900 dark:border-white border-2 rounded-md hover:rounded-xl hover:bg-amber-50 dark:hover:text-gray-700 transition-all duration-300 ease-in-out p-2 ml-auto"
+                                    to="/signin"
+                                    className="border-white  border-2 rounded-md hover:rounded-xl hover:bg-amber-50 hover:text-black transition-all duration-300 ease-in-out p-2"
                                 >
-                                    Login
+                                    Signin
                                 </Link>
-                                <Link
-                                    to="/register"
-                                    className="border-gray-900 dark:border-white border-2 rounded-md hover:rounded-xl hover:bg-amber-50 dark:hover:text-gray-700 transition-all duration-300 ease-in-out p-2"
-                                >
-                                    Sign Up
-                                </Link>
-                            </>
+                            </div>
                         )}
 					</div>
 				</div>
@@ -114,26 +124,45 @@ export default function AsideNav({ children, title }) {
 				<div className="sticky flex top-0 z-50 bg-primary py-2 px-5 md:hidden justify-between items-center">
 
 					<div className={`flex flex-shrink-0`}>
-						{user !== null ? (<Link href="/profile" onClick={NoPageSelected} className="group block flex-shrink-0 hover:bg-primaryLight p-1">
-							<div className="flex items-center ">
-								<div>
-									<img
-										className="inline-block w-14 rounded-full"
-										src="/user_avatar1.jpg"
-										alt=""
-									/>
-								</div>
+						{user !== null ?
+							(
+								<div className="flex flex-row items-center">
+								<Link href="/profile" onClick={NoPageSelected} className="group block flex-shrink-0 hover:bg-primaryLight p-1">
+									<div className="flex items-center ">
+										<div>
+											<img
+												className="inline-block w-14 rounded-full"
+												src="/user_avatar1.jpg"
+												alt=""
+											/>
+										</div>
 
-								<div className="ml-3">
-									<p className="text-lg font-mono text-white"></p>
-									<p className="text-xs text-white group-hover:text-white">View profile</p>
-								</div>
+										<div className="ml-3">
+											<p className="text-lg font-mono text-white"></p>
+											<p className="text-xs text-white group-hover:text-white">View profile</p>
+										</div>
 
+									</div>
+							</Link>
+							<Link
+								onClick={handeleLogout}
+								to="/"
+								className="border-white text-amber-50 border-2 rounded-md hover:rounded-xl ml-2 hover:bg-amber-50 hover:text-black transition-all duration-300 ease-in-out p-2"
+							>
+								logout
+							</Link>
 							</div>
-						</Link>) :
-						(<div className="login">
-							erregrg
-						</div>)
+							) :
+							(
+								<div className="flex flex-col text-amber-50">
+									<Link
+										to="/signin"
+										className="border-white  border-2 rounded-md hover:rounded-xl hover:bg-amber-50 hover:text-black transition-all duration-300 ease-in-out p-2"
+									>
+										Signin
+									</Link>
+								</div>
+							)
 						}
 					</div>
 
@@ -144,7 +173,7 @@ export default function AsideNav({ children, title }) {
 
 					>
 						<span className="sr-only">Open sidebar</span>
-						{sidebarOpen ? <IoClose /> : <GiHamburgerMenu />}
+						{sidebarOpen ? <IoClose/> : <GiHamburgerMenu/>}
 					</button>
 				</div>
 				{/* mobile nav */}

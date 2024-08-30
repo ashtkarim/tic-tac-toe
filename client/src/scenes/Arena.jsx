@@ -6,7 +6,6 @@ import oSymbol from '../images/o-symbol.svg';
 import { io } from 'socket.io-client';
 import RotatingMsg from '../components/RotatingMsg.jsx';
 import { useAuth } from '../components/AuthProvider.jsx';
-const socket = io('http://127.0.0.1:3000');
 
 function Arena({setTitle}) {
   useEffect(() => {
