@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, createContext } from 'react';
 import navigation from '../components/navigationMetaData';
 import { Link } from 'react-router-dom';
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
 import { FaCircleArrowRight, FaCircleArrowLeft } from "react-icons/fa6";
+import { useAuth } from '../components/AuthProvider';
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ');
@@ -13,6 +14,9 @@ export default function AsideNav({ children, title }) {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 	const [navPage, setNavPage] = useState(navigation);
 	const [expand, setExpand] = useState(false);
+	const { user, setUser } = useAuth();
+
+	console.log(user)
 
 	function updateCurrentPage(id) {
 		const updatedPages = [...navPage].map(page => {
@@ -65,7 +69,7 @@ export default function AsideNav({ children, title }) {
 						</nav>
 					</div>
 					<div className={`flex border-t-2 flex-shrink-0 border-secondary ${expand ? 'p-3' : 'p-1'}`}>
-						<Link to="/profile" onClick={NoPageSelected} className="group block w-full flex-shrink-0 hover:bg-primaryLight p-1">
+						{user ?( <Link to="/profile" onClick={NoPageSelected} className="group block w-full flex-shrink-0 hover:bg-primaryLight p-1">
 							<div className="flex items-center">
 								<div>
 									<img
@@ -81,7 +85,22 @@ export default function AsideNav({ children, title }) {
 									</div>
 								) : null}
 							</div>
-						</Link>
+						</Link>) : (
+                            <>
+                                <Link
+                                    to="/login"
+                                    className="border-gray-900 dark:border-white border-2 rounded-md hover:rounded-xl hover:bg-amber-50 dark:hover:text-gray-700 transition-all duration-300 ease-in-out p-2 ml-auto"
+                                >
+                                    Login
+                                </Link>
+                                <Link
+                                    to="/register"
+                                    className="border-gray-900 dark:border-white border-2 rounded-md hover:rounded-xl hover:bg-amber-50 dark:hover:text-gray-700 transition-all duration-300 ease-in-out p-2"
+                                >
+                                    Sign Up
+                                </Link>
+                            </>
+                        )}
 					</div>
 				</div>
 				<button
@@ -95,7 +114,7 @@ export default function AsideNav({ children, title }) {
 				<div className="sticky flex top-0 z-50 bg-primary py-2 px-5 md:hidden justify-between items-center">
 
 					<div className={`flex flex-shrink-0`}>
-						<Link href="/profile" onClick={NoPageSelected} className="group block flex-shrink-0 hover:bg-primaryLight p-1">
+						{user !== null ? (<Link href="/profile" onClick={NoPageSelected} className="group block flex-shrink-0 hover:bg-primaryLight p-1">
 							<div className="flex items-center ">
 								<div>
 									<img
@@ -106,12 +125,16 @@ export default function AsideNav({ children, title }) {
 								</div>
 
 								<div className="ml-3">
-									<p className="text-lg font-mono text-white">alien</p>
+									<p className="text-lg font-mono text-white"></p>
 									<p className="text-xs text-white group-hover:text-white">View profile</p>
 								</div>
 
 							</div>
-						</Link>
+						</Link>) :
+						(<div className="login">
+							erregrg
+						</div>)
+						}
 					</div>
 
 					<button
