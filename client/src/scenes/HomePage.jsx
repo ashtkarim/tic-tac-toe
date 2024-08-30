@@ -1,6 +1,7 @@
 import './HomePage.css'
 import UserCard from "../components/userCard.jsx";
 import { Link } from 'react-router-dom';
+import {useEffect} from "react";
 
 function CardsBrand() {
   return <div class="cardsBrand__container">
@@ -12,7 +13,10 @@ function CardsBrand() {
 }
 
 function HomePage({ setTitle }) {
-  setTitle('Welcome on the tic tac toe game!');
+
+    useEffect(() => {
+        setTitle('Welcome on the tic tac toe game!');
+    }, [setTitle]);
 
   return (
       <div className="grid grid-cols-1 md:grid-cols-2">

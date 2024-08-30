@@ -4,6 +4,7 @@ import { FaAt } from "react-icons/fa";
 import UserCard from "../components/userCard";
 import { Link } from "react-router-dom";
 import {useAuth} from "../components/PrivatRoute.jsx";
+import {useEffect} from "react";
 const gamesHistory = [
     {
         OpponentUsername: 'doomsday',
@@ -31,7 +32,10 @@ const gamesHistory = [
 
 
 export default function Profile({ setTitle }) {
-    setTitle('Hello you :)');
+
+    useEffect(() => {
+        setTitle('Hello you :)');
+    }, [setTitle]);
     const { user, logout } = useAuth();
 
     return <>

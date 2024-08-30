@@ -9,12 +9,19 @@ import oIcon from '../images/cat_avatar.png';
 import { io } from 'socket.io-client';
 import { PiNumberNineFill } from 'react-icons/pi';
 import RotatingMsg from '../components/RotatingMsg.jsx';
-const socket = io('http://127.0.0.1:3000')
+import {useAuth} from "../components/PrivatRoute.jsx";
+const socket = io('http://127.0.0.1:3000');
+
 
 
 
 function RandomGame({setTitle}) {
-  setTitle("Who you will beat today!!!");
+  useEffect(() => {
+    setTitle("Who you will beat today!!!");
+  }, [setTitle]);
+
+  const {user, logout} = useAuth();
+
   const initialBoard = Array(9).fill(null);
   const [board, setBoard] = useState(initialBoard);
   const [timeLeftX, setTimeLeftX] = useState(30);
