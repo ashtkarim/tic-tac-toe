@@ -14,7 +14,7 @@ export const useAuth = () => {
 
 
 const PrivateRoute = ({ children, accessible=true }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState();
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [doneLoading, setDoneLoading] = useState(false);
     const [user, setUser] = useState(null);
 
@@ -26,7 +26,7 @@ const PrivateRoute = ({ children, accessible=true }) => {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const res = await request.get("http://127.0.0.1:5000/@me")
+                const res = await request.get("http://127.0.0.1:3000/@me")
                 if (res.status === 200) {
                     console.log(res);
                     setUser(res.data.user)
@@ -52,7 +52,6 @@ const PrivateRoute = ({ children, accessible=true }) => {
             </AuthContext.Provider>
         )
     }
-
     return (
         isAuthenticated ? (
             <AuthContext.Provider value={{ user }}>
