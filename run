@@ -1,0 +1,4 @@
+#!/bin/bash
+
+gnome-terminal --tab -- bash -c "cd client; ./app.py"
+gnome-terminal --tab -- bash -c "cd server; npm start"

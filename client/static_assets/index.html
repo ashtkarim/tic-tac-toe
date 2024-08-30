@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>TicTacToe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+
+<body>
+    <div class="hero">
+        <div class="container">
+            <header class="header">
+                <img src="images/brand_logo.svg" alt="" class="header__brand">
+                <h1><strong>WEB</strong> Tic Tac Toe</h1>
+            </header>
+            <div class="actions">
+                <a><i class="bi bi-stars"></i>Play with bot</a>
+                <a><i class="bi bi-people"></i>Play with a friend</a>
+                <a><i class="bi bi-question-circle"></i>How to play</a>
+            </div>
+        </div>
+        <aside>
+
+            <figure class="userCard">
+                <img src="images/user_avatar1.jpg" alt="" class="userCard__img">
+                <figcaption>
+                    <p class="userCard__name">Ali jbari</p>
+                </figcaption>
+            </figure>
+            <figure class="userCard">
+                <img src="images/user_avatar2.png" alt="" class="userCard__img">
+                <figcaption>
+                    <p class="userCard__name">G.O.A.T</p>
+                </figcaption>
+            </figure>
+            <figure class="userCard">
+                <img src="images/user_avatar3.jpg" alt="" class="userCard__img">
+                <figcaption>
+                    <p class="userCard__name">
+                        Jeffrey Dahmer
+                    </p>
+                </figcaption>
+            </figure>
+        </aside>
+
+    </div>
+    <form>
+        <div>
+            <h1>Let's plaaaaaaaaaaay!</h1>
+            <div class="brutalist-container">
+                <input placeholder="@beast-writting" class="brutalist-input smooth-type" type="text" />
+                <label class="brutalist-label"><i class="bi bi-person"
+                        style="margin-right: .4rem"></i></i>Username</label>
+            </div>
+            <div class="brutalist-container">
+                <input placeholder="password..." class="brutalist-input smooth-type" type="password" />
+                <label class="brutalist-label">Password</label>
+            </div>
+        </div>
+    </form>
+    <div class="board__container">
+
+        <div class="board">
+            <div class="board__square board__square--11"><img src="images/x-symbol.svg" /></div>
+            <div class="board__square board__square--12"><img src="images/o-symbol.svg" /></div>
+            <div class="board__square board__square--13"></div>
+            <div class="board__square board__square--21"></div>
+            <div class="board__square board__square--22"></div>
+            <div class="board__square board__square--23"></div>
+            <div class="board__square board__square--31"></div>
+            <div class="board__square board__square--32"></div>
+            <div class="board__square board__square--33"></div>
+        </div>
+    </div>
+</body>
+<script>
+    const squares = document.getElementsByClassName('board__square');
+    let play_with = 'x';
+    let angel = 360;
+    Array.from(squares).forEach(square => {
+        square.addEventListener('click', () => {
+            if (square.getElementsByTagName('img').length) {
+                console.log('Already taken!');
+            } else {
+                const circle = document.createElement('img');
+                circle.src = `images/${play_with}-symbol.svg`;
+                play_with = play_with === 'x' ? 'o' : 'x';
+                square.insertAdjacentElement('afterbegin', circle);
+                console.log(square.length);
+            }
+            square.getElementsByTagName('img')[0].style.transform = `rotate(${angel}deg)`;
+            angel = angel ? 0 : 360;
+        })
+    })
+</script>
+
+</html>

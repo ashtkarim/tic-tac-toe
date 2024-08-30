@@ -1,0 +1,87 @@
+/* Add this reset to ensure consistent box-sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #282c34;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 120px); /* Increased column width */
+  grid-template-rows: repeat(3, 120px); /* Increased row height */
+  gap: 10px; /* Increased space between grid cells */
+  width: 380px; /* Increased total width including gaps */
+  height: 380px; /* Increased total height including gaps */
+}
+
+.square {
+  width: 120px; /* Increased width */
+  height: 120px; /* Increased height */
+  display: flex; /* Align content center */
+  align-items: center; /* Center align vertically */
+  justify-content: center; /* Center align horizontally */
+  border: 2px solid #fff; /* Border for visual grid cells */
+  font-size: 3rem; /* Increased font size for X and O */
+  overflow: hidden; /* Prevent content overflow */
+  text-align: center; /* Center text alignment */
+  padding: 0; /* Ensure no padding affects size */
+  margin: 0; /* Ensure no margin affects size */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  color: #000;
+}
+
+.button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background: #61dafb;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

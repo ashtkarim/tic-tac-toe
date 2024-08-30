@@ -12,6 +12,8 @@ WINNING_PATTERNS = (
     "?...?...?",
     "..?.?.?..",
 )
+# board = ["OO ........"]
+
 WINNING_PATTERNS_POS = (
     [0, 1, 2],
     [3, 4, 5],
