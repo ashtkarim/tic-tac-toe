@@ -15,13 +15,18 @@ async function me(req: Request<{}, {}, LoginRequestBody>, res: Response) {
      * using Jwt auth
      */
     const token = req.cookies._token;
-    const {userId} = verifyToken(token);
-    const user = await User.findById(userId);
+    // let userId;
+    try {
+        const {userId} = verifyToken(token);
+        const user = await User.findById(userId);
+        return res.status(200).send(JSON.stringify({"user": {
+            userName: user?.username,
+            id: user?.id
+        }}));
+    } catch {
+        return res.status(403).send({'status': 'invalid token'});
+    }
 
-    return res.status(200).send(JSON.stringify({"user": {
-        userName: user?.username,
-        id: user?.id
-    }}));
 
 }
 
