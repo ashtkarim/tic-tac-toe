@@ -27,10 +27,6 @@ function Arena({ setTitle }) {
   const [socket, setSocket] = useState(null); // Add a state for socket
   const [msgBox, setMsgBox] = useState(false);
 
-  useEffect(() => {
-    setTitle("Who you will beat today!!!");
-  }, [setTitle]);
-
   // Handle socket-related actions within this effect
   useEffect(() => {
     const newSocket = io('http://127.0.0.1:3000');
