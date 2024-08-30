@@ -6,7 +6,6 @@ import oSymbol from '../images/o-symbol.svg';
 import { io } from 'socket.io-client';
 import RotatingMsg from '../components/RotatingMsg.jsx';
 import { useAuth } from '../components/AuthProvider.jsx';
-const socket = io('http://127.0.0.1:3000');
 
 function Arena({setTitle}) {
   useEffect(() => {
@@ -35,6 +34,13 @@ function Arena({setTitle}) {
   useEffect(() => {
     const newSocket = io('http://127.0.0.1:3000');
     setSocket(newSocket);
+
+    // join a room
+    newSocket.on('connect', () => {
+      // console.log('Connected to the server with socket ID:', newSocket.id);
+      // You can also emit data or perform actions after connecting
+      newSocket.emit('join_game', {userId: user.id});
+    });
 
     // Handle the receive message from the other user
     newSocket.on('receive_message', (data) => {

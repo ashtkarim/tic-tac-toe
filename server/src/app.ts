@@ -56,6 +56,8 @@ let currentRoom = getId();
 allGames[currentRoom] = [];
 const icons = {'1': 'x', '2': 'o'}
 
+// {roomid: [{socket: socketId}, {useId: useID}]}
+
 
 function handleMultiRooms(socket) {
   if (currentRoom === null || allGames[currentRoom] && allGames[currentRoom].length === 2) {
@@ -63,7 +65,7 @@ function handleMultiRooms(socket) {
       currentRoom = getId();
       allGames[currentRoom] = [];
   }
-  if (allGames[currentRoom].length === 1 && !io.sockets.sockets.get(allGames[currentRoom][0])) {
+  if (allGames[currentRoom].length === 1 && !io.sockets.sockets.get(allGames[currentRoom][0].socketId)) {
     console.log(`connection lost ${socket.id}`);
         currentRoom = getId();
         allGames[currentRoom] = [];
@@ -83,23 +85,27 @@ function checkWinner(board, icon) {
 function startSocket(socket) {
   const socketId = socket.id;
 
-  handleMultiRooms(socket);
-  
-  // adds the players to the room
-  allGames[currentRoom].push(socketId);
-  socket.join(currentRoom);
-  io.in(currentRoom).emit('create_room', {'roomId': currentRoom});
+  socket.on('join_game', (data) => {
+    handleMultiRooms(socket);
 
-  // start the game by sending the players their id's
-  if (currentRoom && allGames[currentRoom].length === 2) {
-    console.log('game started')
-    console.log(`${allGames[currentRoom][0]} VS ${allGames[currentRoom][1]}`);  
-    io.to(allGames[currentRoom][0]).emit('playerId', {playerId: '1', turn: true})
-    io.to(allGames[currentRoom][1]).emit('playerId', {playerId: '2', turn: false})
-    io.in(currentRoom).emit('start_game', true);
-    // the player n1 will start first
-    io.to(allGames[currentRoom][0]).emit('turn', {turn: true});
-  }
+    console.log(`Joining room: ${currentRoom} with userId: ${data.userId}`);
+    // adds the players to the room
+    allGames[currentRoom].push({socketId: socketId, userId: data.userId});
+    socket.join(currentRoom);
+    io.in(currentRoom).emit('create_room', {'roomId': currentRoom});
+
+    // start the game by sending the players their id's
+    if (currentRoom && allGames[currentRoom].length === 2) {
+      // console.log('game started')
+      console.log(`${allGames[currentRoom][0].userId} VS ${allGames[currentRoom][1].userId}`);  
+      io.to(allGames[currentRoom][0].socketId).emit('playerId', {playerId: '1', turn: true})
+      io.to(allGames[currentRoom][1].socketId).emit('playerId', {playerId: '2', turn: false})
+      io.in(currentRoom).emit('start_game', true);
+      // the player n1 will start first
+      io.to(allGames[currentRoom][0].socketId).emit('turn', {turn: true});
+    }
+  })
+
 
   // takes a msg from a user and send it to the other one
   socket.on('send_message', (data) => {
@@ -112,41 +118,41 @@ function startSocket(socket) {
     const board = data.board;
     const playerId = data.playerId;
     const roomId = data.roomId;
-    // console.log(data);
+    console.log(data);
 
     if (board[data.index] === null) {
       board[data.index] = icons[playerId];
 
       io.in(roomId).emit('update_board', { board });
 
-      const player1Id = allGames[roomId][0];
-      const player2Id = allGames[roomId][1];
+      const player1 = allGames[roomId][0];
+      const player2 = allGames[roomId][1];
 
       if (checkWinner(board, icons[playerId])) {
         // Update winner and loser statistics
-        const winnerId = playerId === '1' ? player1Id : player2Id;
-        const loserId = playerId === '1' ? player2Id : player1Id;
+        const winnerId = playerId === '1' ? 0 : 1;
+        const loserId = playerId === '1' ? 0 : 1;
 
         // Increase score by 10 for a win
-        await User.findByIdAndUpdate(winnerId, { $inc: { wins: 1, score: 10 } });
+        await User.findByIdAndUpdate(allGames[roomId][winnerId].userId, { $inc: { wins: 1, score: 10 } });
         // Decrease score by 5 for a loss
-        await User.findByIdAndUpdate(loserId, { $inc: { losses: 1, score: -5 } });
+        await User.findByIdAndUpdate(allGames[roomId][loserId].userId, { $inc: { losses: 1, score: -5 } });
 
-        io.to(player1Id).emit('end_game', { winner: playerId === '1' });
-        io.to(player2Id).emit('end_game', { winner: playerId === '2' });
+        io.to(player1.socketId).emit('end_game', { winner: playerId === '1' });
+        io.to(player2.socketId).emit('end_game', { winner: playerId === '2' });
 
       } else if (!board.includes(null)) {
         // Update draw statistics
         // Increase score by 2 for a draw
-        await User.findByIdAndUpdate(player1Id, { $inc: { draws: 1, score: 2 } });
-        await User.findByIdAndUpdate(player2Id, { $inc: { draws: 1, score: 2 } });
+        await User.findByIdAndUpdate(player1.userId, { $inc: { draws: 1} });
+        await User.findByIdAndUpdate(player2.userId, { $inc: { draws: 1} });
 
-        io.to(player1Id).emit('end_game', { draw: true });
-        io.to(player2Id).emit('end_game', { draw: true });
+        io.to(player1.socketId).emit('end_game', { draw: true });
+        io.to(player2.socketId).emit('end_game', { draw: true });
 
       } else {
-        io.to(player1Id).emit('update_turn', { turn: playerId === '2' });
-        io.to(player2Id).emit('update_turn', { turn: playerId === '1' });
+        io.to(player1.socketId).emit('update_turn', { turn: playerId === '2' });
+        io.to(player2.socketId).emit('update_turn', { turn: playerId === '1' });
       }
     }
   });
@@ -154,8 +160,7 @@ function startSocket(socket) {
   socket.on('disconnect', () => {
     console.log(`player disconnected ${socketId}`)
     for (let [roomId, players] of Object.entries(allGames)) {
-      const playerArray = players as string[];
-      if (playerArray.includes(socketId)) {
+      if (players[0]?.socketId === socketId || players[1]?.socketId === socketId) {
         io.in(roomId).emit('disconnected', 'exited');
       }
     }
@@ -163,7 +168,7 @@ function startSocket(socket) {
 
   // when one player exits the game the room will be deleted
   socket.on('exit_msg', ({roomId}) => {
-    console.log('player exited', roomId)
+    // console.log('player exited', roomId)
     socket.to(roomId).emit('disconnected', `player with id ${socketId} have disconected`);
     delete allGames[roomId];
     currentRoom = null;
