@@ -9,6 +9,7 @@ import { Server } from "socket.io";
 import http from 'http';
 import { all } from "axios";
 import { Socket } from "dgram";
+import { disconnect } from "process";
 const { v4: getId } = require('uuid');
 
 const WINNING_POS = [
@@ -57,10 +58,12 @@ const icons = {'1': 'x', '2': 'o'}
 
 function handleMultiRooms(socket) {
   if (currentRoom === null || allGames[currentRoom] && allGames[currentRoom].length === 2) {
+    console.log(`room is full`);
       currentRoom = getId();
       allGames[currentRoom] = [];
   }
   if (allGames[currentRoom].length === 1 && !io.sockets.sockets.get(allGames[currentRoom][0])) {
+    console.log(`connection lost ${socket.id}`);
         currentRoom = getId();
         allGames[currentRoom] = [];
   }
@@ -88,7 +91,8 @@ function startSocket(socket) {
 
   // start the game by sending the players their id's
   if (currentRoom && allGames[currentRoom].length === 2) {
-    // console.log(`${allGames[currentRoom][0]} VS ${allGames[currentRoom][1]}`);
+    console.log('game started')
+    console.log(`${allGames[currentRoom][0]} VS ${allGames[currentRoom][1]}`);  
     io.to(allGames[currentRoom][0]).emit('playerId', {playerId: '1', turn: true})
     io.to(allGames[currentRoom][1]).emit('playerId', {playerId: '2', turn: false})
     io.in(currentRoom).emit('start_game', true);
@@ -133,12 +137,15 @@ function startSocket(socket) {
     }
   })
 
-  // logic for timeout for later update
-  // socket.on('time_out', ({playerId, roomId}) => {
-  //   console.log('time out info:', {playerId, roomId})
-  //   io.to(allGames[roomId][0]).emit('end_game', {winner: playerId === '2'})
-  //   io.to(allGames[roomId][1]).emit('end_game', {winner: playerId === '1'})
-  // })
+  socket.on('disconnect', () => {
+    console.log(`player disconnected ${socketId}`)
+    for (let [roomId, players] of Object.entries(allGames)) {
+      const playerArray = players as string[];
+      if (playerArray.includes(socketId)) {
+        io.in(roomId).emit('disconnected', 'exited');
+      }
+    }
+  })
 
   // when one player exits the game the room will be deleted
   socket.on('exit_msg', ({roomId}) => {
