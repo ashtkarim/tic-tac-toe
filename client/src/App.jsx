@@ -21,10 +21,14 @@ const App = () => {
       <AsideNav title={title}>
         <Routes>
           <Route path="/" element={<HomePage setTitle={setTitle} />} />
-          <Route path="/login" element={<LoginPage setTitle={setTitle} />} />
-          <Route path="/register" element={<RegisterPage setTitle={setTitle} />} />
+          <Route path="/signin" element={<LoginPage setTitle={setTitle} />} />
+          <Route path="/signup" element={<RegisterPage setTitle={setTitle} />} />
           <Route path="/leaderboard" element={<LeaderboardPage setTitle={setTitle} />} />
-          <Route path="/profile" element={<Profile setTitle={setTitle} />} />
+          <Route path="/profile" element={
+            <PrivateRoute accessible={false}>
+              <Profile setTitle={setTitle}/>
+            </PrivateRoute>
+          } />
           <Route path="/about" element={<About setTitle={setTitle} />} />
           <Route path="/arena" element={
               <RandomGame setTitle={setTitle} />

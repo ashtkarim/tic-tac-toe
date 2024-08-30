@@ -88,7 +88,7 @@ function RegisterPage({ setTitle }) {
         <div className="text-center">
           <p className="text-sm text-gray-600">
             Already have an account?{' '}
-            <Link to="/login" className="text-blue-500 hover:text-blue-600">
+            <Link to="/signin" className="text-blue-500 hover:text-blue-600">
               Login here
             </Link>.
           </p>

@@ -13,7 +13,7 @@ function RotatingMsg() {
                     >
                     </div>
                 </div>
-            <div className='text-white'>Waiting dor other player</div>
+            <div className='text-white'>Waiting for other player</div>
             </div>
         </>
     );

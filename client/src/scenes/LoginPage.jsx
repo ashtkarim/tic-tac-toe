@@ -79,7 +79,7 @@ function LoginPage({ setTitle }) {
         <div className="text-center">
           <p className="text-sm text-gray-600">
             First time?{' '}
-            <Link to="/register" className="text-blue-500 hover:text-blue-600">
+            <Link to="/signup" className="text-blue-500 hover:text-blue-600">
               Create account
             </Link>.
           </p>

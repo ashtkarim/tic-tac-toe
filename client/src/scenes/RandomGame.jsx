@@ -13,7 +13,8 @@ const socket = io('http://127.0.0.1:3000')
 
 
 
-function RandomGame() {
+function RandomGame({setTitle}) {
+  setTitle("Who you will beat today!!!");
   const initialBoard = Array(9).fill(null);
   const [board, setBoard] = useState(initialBoard);
   const [winner, setWinner] = useState(null);

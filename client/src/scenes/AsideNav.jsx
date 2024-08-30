@@ -116,15 +116,16 @@ export default function AsideNav({ children, title }) {
 
 					<button
 						type="button"
-						className="-ml-0.5 -mt-0.5 inline-flex h-12 w-12 items-center text-3xl justify-center bg-primaryLight text-white hover:bg-primaryLighter focus:outline-none focus:ring-2 focus:ring-inset focus:ring-secondary"
 						onClick={() => setSidebarOpen(!sidebarOpen)}
+						className={`-ml-0.5 -mt-0.5 inline-flex h-12 w-12 items-center text-3xl justify-center bg-primaryLight text-white hover:bg-primaryLighter focus:outline-none focus:ring-2 focus:ring-inset focus:ring-secondary`}
+
 					>
 						<span className="sr-only">Open sidebar</span>
 						{sidebarOpen ? <IoClose /> : <GiHamburgerMenu />}
 					</button>
 				</div>
 				{/* mobile nav */}
-				{sidebarOpen ? <div className='sticky top-14 sm:hidden bg-primary px-5 pb-5 border-t-2 z-30'>
+				{sidebarOpen ? <div className='sticky top-14 md:hidden bg-primary px-5 pb-5 border-t-2 z-30'>
 					<nav className='flex-1 space-y-1 px-2 mt-5'>
 						{navPage.map((item) => (
 							<Link
