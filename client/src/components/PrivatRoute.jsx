@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useContext, createContext } from 'react';
 import request from './request';
+import Cookies from 'js-cookie';
 
 const AuthContext = createContext();
 export const useAuth = () => {
@@ -32,10 +33,13 @@ const PrivateRoute = ({ children, accessible=true }) => {
                     setUser(res.data.user)
                     setIsAuthenticated(true);
                 } else {
+                    Cookies.remove('_token');
                     setIsAuthenticated(false);
                 }
             } catch {
-                console.log("UNAUTHERIZED");
+                Cookies.remove('_token');
+                // console.log("UNAUTHERIZED");
+                setIsAuthenticated(false);
             }
             finally {
                 setDoneLoading(true);

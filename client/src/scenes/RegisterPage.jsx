@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 function RegisterPage({ setTitle }) {
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
+  // const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
@@ -22,14 +22,14 @@ function RegisterPage({ setTitle }) {
       return;
     }
 
-    if (!email || !email.includes('@')) {
-      setErrorMsg('Please enter a valid email address.');
-      return;
-    }
+    // if (!email || !email.includes('@')) {
+    //   setErrorMsg('Please enter a valid email address.');
+    //   return;
+    // }
 
     setErrorMsg('');
     console.log('Username:', username);
-    console.log('Email:', email);
+    // console.log('Email:', email);
     console.log('Password:', password);
 
     fetch('http://127.0.0.1:3000/signup', {
@@ -40,7 +40,6 @@ function RegisterPage({ setTitle }) {
       },
       body: JSON.stringify({
         username,
-        email,
         password
       })
     })
@@ -70,17 +69,6 @@ function RegisterPage({ setTitle }) {
                   className="w-full px-4 py-2 border border-secondary bg-primaryLight rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  required
-              />
-            </div>
-            <div className="space-y-2">
-              <label htmlFor="email" className="block text-sm font-medium">Email</label>
-              <input
-                  type="email"
-                  id="email"
-                  className="w-full px-4 py-2 border border-secondary bg-primaryLight rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
                   required
               />
             </div>

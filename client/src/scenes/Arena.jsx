@@ -5,8 +5,15 @@ import xSymbol from '../images/x-symbol.svg';
 import oSymbol from '../images/o-symbol.svg';
 import { io } from 'socket.io-client';
 import RotatingMsg from '../components/RotatingMsg.jsx';
+import {useAuth} from "../components/PrivatRoute.jsx";
+const socket = io('http://127.0.0.1:3000');
 
-function RandomGame({ setTitle }) {
+function Arena({setTitle}) {
+  useEffect(() => {
+    setTitle("Who you will beat today!!!");
+  }, [setTitle]);
+
+  const {user, logout} = useAuth();
   const initialBoard = Array(9).fill(null);
   const [board, setBoard] = useState(initialBoard);
   const [winner, setWinner] = useState(null);
@@ -260,4 +267,4 @@ function RandomGame({ setTitle }) {
   );
 }
 
-export default RandomGame;
+export default Arena;

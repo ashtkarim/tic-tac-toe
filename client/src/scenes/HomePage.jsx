@@ -16,7 +16,6 @@ function HomePage({ setTitle }) {
     useEffect(() => {
       setTitle('Welcome on the tic tac toe game!');
     }, [setTitle])
-    
 
   return (
       <div className="grid grid-cols-1 md:grid-cols-2">

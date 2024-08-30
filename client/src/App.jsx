@@ -10,7 +10,6 @@ import { useState } from 'react';
 import Profile from './scenes/profile';
 import LeaderboardPage from "./scenes/LeaderboardPage.jsx";
 import Robot from './scenes/Robot.jsx';
-import RandomGame from './scenes/RandomGame.jsx';
 
 const App = () => {
   const [title, setTitle] = useState('Welcome to the Tic-Tac-Toe Game');
@@ -33,7 +32,7 @@ const App = () => {
           <Route path="/about" element={<About setTitle={setTitle} />} />
           <Route path="/arena" element={
             <PrivateRoute accessible={false}>
-              <RandomGame setTitle={setTitle} />
+              <Arena setTitle={setTitle} />
             </PrivateRoute>
           } />
         </Routes>
