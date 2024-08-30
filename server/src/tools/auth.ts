@@ -3,6 +3,7 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import 'dotenv/config'
 
 const secretKey = process.env['JWT_SECRET'];
+// console.log("secretKey:",secretKey)
 
 async function hashPassword(password: string | Buffer): Promise<string> {
     // This function hashes a password and returns it
