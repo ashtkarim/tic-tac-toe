@@ -73,12 +73,36 @@ To run the project locally, follow these steps:
    
    # Start frontend
    cd ../client
-   npm run start
+   npm run dev
    ```
 
 5. **Access the application:**
 
    Open your browser and navigate to `http://localhost:5000`.
+
+## Configuration:
+#### Setting up the .env file
+
+- Navigate to the server folder:
+    ```bash
+    cd server
+
+- Create a new file named .env:
+    ```bash
+    vim .env
+
+- Open the .env file in your preferred text editor and add the following configurations:
+    ```bash
+    SECRET_KEY= your_secret_key
+    MONGO_USERNAME="Badr-Annabi" //Only fo SE Competition
+    MONGO_PASSWORD="Badr149" //Only fo SE Competition
+- [We know that this is a bad practice but it's only for AlX Mentors :) ].If you wanted to use your username and password, you have to change the line in mongoose.connect for your cluster
+
+- Creating a Secret Key:
+  To generate a secure secret key, you can use the following command in your terminal:
+    ```bash
+    openssl rand -hex 32
+- Copy the output and paste it as the value for SECRET_KEY in your .env file.
 
 ## Usage
 
