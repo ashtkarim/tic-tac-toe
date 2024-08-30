@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 function LoginPage({ setTitle }) {
 
 
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -24,7 +24,7 @@ function LoginPage({ setTitle }) {
       },
       credentials: 'include',
       body: JSON.stringify({
-        email, password
+        username, password
       })
     }).then((res) => {
       if (res.ok) {
@@ -43,35 +43,35 @@ function LoginPage({ setTitle }) {
       <div className="w-full max-w-md p-8 space-y-6 bg-primary rounded-lg shadow-md">
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="space-y-2">
-            <label htmlFor="email" className="block text-sm font-medium">Username</label>
+            <label htmlFor="username" className="block text-sm font-medium">Username</label>
             <input
-              type="email"
-              id="email"
-              className="w-full px-4 py-2 border border-secondary bg-primaryLight rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
+                type="text"
+                id="username"
+                className="w-full px-4 py-2 border border-secondary bg-primaryLight rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
             />
           </div>
           <div className="space-y-2">
             <label htmlFor="password" className="block text-sm font-medium">Password</label>
             <input
-              type="password"
-              id="password"
-              className="w-full px-4 py-2 border border-secondary bg-primaryLight rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
+                type="password"
+                id="password"
+                className="w-full px-4 py-2 border border-secondary bg-primaryLight rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
             />
           </div>
           {errorMsg && (
-            <div id="msg__box" className="text-red-500 text-sm">
-              {errorMsg}
-            </div>
+              <div id="msg__box" className="text-red-500 text-sm">
+                {errorMsg}
+              </div>
           )}
           <button
-            type="submit"
-            className="w-full px-4 py-2 text-white bg-primaryLighter rounded-md hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="submit"
+              className="w-full px-4 py-2 text-white bg-primaryLighter rounded-md hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             Login
           </button>
