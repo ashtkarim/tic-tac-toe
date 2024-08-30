@@ -40,7 +40,7 @@ function HomePage({ setTitle }) {
               <div className='px-14 md:px-32 mb-16'>
                   <img src="/brand_logo.svg"/>
               </div>
-              <Link to="/signin"
+              <Link to="/arena"
                     className='w-full text-center font-bold text-xl border border-secondary bg-primary rounded-full py-2 text-white hover:bg-primaryLighter focus:border-white'>Let's
                   play</Link>
           </div>

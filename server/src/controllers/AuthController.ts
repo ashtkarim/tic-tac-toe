@@ -29,8 +29,8 @@ async function signin(req: Request<{}, {}, LoginRequestBody>, res: Response) {
     /**
      * This function responsible for the signin process
      */
-    const {email, password} = req.body;
-    const user = await User.findOne({email});
+    const {username, password} = req.body;
+    const user = await User.findOne({username});
 
     if (user === null) {
         return res.status(404).send({'status': 'user not found'});

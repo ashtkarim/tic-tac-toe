@@ -23,6 +23,7 @@ const App = () => {
           <Route path="/" element={<HomePage setTitle={setTitle} />} />
           <Route path="/signin" element={<LoginPage setTitle={setTitle} />} />
           <Route path="/signup" element={<RegisterPage setTitle={setTitle} />} />
+          <Route path="/robot" element={<Robot setTitle={setTitle} />} />
           <Route path="/leaderboard" element={<LeaderboardPage setTitle={setTitle} />} />
           <Route path="/profile" element={
             <PrivateRoute accessible={false}>
